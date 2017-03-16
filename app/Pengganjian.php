@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Prosesdedak extends Model
+class Pengganjian extends Model
 {
     //
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProsesdedaksTable extends Migration
+class CreateDedaksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateProsesdedaksTable extends Migration
      */
     public function up()
     {
-        Schema::create('prosesdedaks', function (Blueprint $table) {
+        Schema::create('dedaks', function (Blueprint $table) {
             $table->increments('id');
+            $table->char('gabah_id',8);
+            $table->integer('user_id')->unsigned();
+            $table->date('tanggal_masuk_sekam');
+            $table->integer('jumlah_sekam');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ class CreateProsesdedaksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prosesdedaks');
+        Schema::dropIfExists('dedaks');
     }
 }

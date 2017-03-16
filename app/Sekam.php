@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Prosesgabah extends Model
+class Sekam extends Model
 {
     //
 }
