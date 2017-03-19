@@ -15,11 +15,15 @@ class CreateGudangsTable extends Migration
     {
         Schema::create('gudangs', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
             $table->string('nama_barang_gudang');
-            $table->integer('stok_barang_gudang');
-            $table->integer('harga_barang_gudang');
+            $table->double('stok_barang_gudang',10,2);
+            $table->double('harga_barang_gudang',10,2);
             $table->enum('tipe_barang_gudang',['gabah_basah','gabah_kering','beras','sekam','dedak']);
             $table->timestamps();
+        });
+        Schema::table('gudangs', function (Blueprint $table){
+          $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

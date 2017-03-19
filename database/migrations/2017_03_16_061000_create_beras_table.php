@@ -18,7 +18,7 @@ class CreateBerasTable extends Migration
             $table->char('gabah_id',8);
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_masuk_beras');
-            $table->integer('jumlah_beras');
+            $table->double('jumlah_beras',10,2);
             $table->timestamps();
         });
         Schema::table('beras', function(Blueprint $table){

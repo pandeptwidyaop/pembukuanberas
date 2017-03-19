@@ -18,7 +18,7 @@ class CreateSekamsTable extends Migration
             $table->char('gabah_id',8);
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_masuk_sekam');
-            $table->integer('jumlah_sekam');
+            $table->double('jumlah_sekam',10,2);
             $table->timestamps();
         });
         Schema::table('sekams', function(Blueprint $table){

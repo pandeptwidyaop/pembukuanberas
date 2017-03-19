@@ -6,12 +6,6 @@
     case '2':
       $base = 'admin/';
       break;
-    case '3':
-      $base = 'sekretaris/';
-      break;
-    case '4':
-      $base = 'bendahara/';
-      break;
     default:
 
       break;
@@ -24,23 +18,24 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>{{$ormawa->nama_ormawa}} | ORMAWA MANAGAER</title>
+    <title>{{config('app.name')}}</title>
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/roboto.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/material-icons.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->
     <link href="{{asset('plugins/bootstrap/css/bootstrap.css')}}" rel="stylesheet">
 
     <!-- Waves Effect Css -->
     <link href="{{asset('plugins/node-waves/waves.css')}}" rel="stylesheet" />
-
+    <link href="{{asset('plugins/bootstrap-select/css/bootstrap-select.css')}}" rel="stylesheet" />
     <!-- Animation Css -->
     <link href="{{asset('plugins/animate-css/animate.css')}}" rel="stylesheet" />
-
+    <link rel="stylesheet" href="{{asset('/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css')}}">
+    <link href="{{asset('plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css')}}" rel="stylesheet" />
     <!-- Custom Css -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
@@ -48,7 +43,7 @@
     <link href="{{asset('css/themes/all-themes.css')}}" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-indigo">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -62,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <p>Please wait...</p>
+            <p>Sedang meload data ... </p>
         </div>
     </div>
     <!-- #END# Page Loader -->
@@ -85,7 +80,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="{{url('/')}}">{{$ormawa->nama_ormawa}} - ORMAWA MANAGER</a>
+                <a class="navbar-brand" href="{{url('/')}}">{{config('app.name')}}</a>
             </div>
         </div>
     </nav>
@@ -99,8 +94,8 @@
                     <img src="{{asset('images/user.png')}}" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{$user->Pengurus->Keanggotaan->Anggota->nama_anggota}}</div>
-                    <div class="email">{{$user->email}}</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{Auth::user()->name}}</div>
+                    <div class="email">{{Auth::user()->username}}</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
@@ -119,47 +114,62 @@
             <div class="menu">
                 <ul class="list">
                     <li class="header">MAIN MENU</li>
-                    <li id="dashboard">
-                        <a href="{{url('/')}}">
+                    <li id="gudang">
+                        <a href="javascript:void(0)" class="menu-toggle">
                             <i class="material-icons">dashboard</i>
-                            <span>Dashboard</span>
+                            <span>Gudang</span>
+                        </a>
+                        <ul class="ml-menu">
+                          <li id="stok">
+                              <a href="{{url('gudang/stok')}}">Stok</a>
+                          </li>
+                          <li id="gabah">
+                              <a href="{{url('gudang/gabah')}}">Gabah</a>
+                          </li>
+                          <li id="beras">
+                              <a href="{{url('gudang/beras')}}">Beras Gabah</a>
+                          </li>
+                          <li id="berasbeli">
+                              <a href="{{url('gudang/beliberas')}}">Beras Beli</a>
+                          </li>
+                          <li id="sekam">
+                              <a href="{{url('gudang/sekam')}}">Sekam</a>
+                          </li>
+                          <li id="dedak">
+                              <a href="{{url('gudang/dedak')}}">Dedak</a>
+                          </li>
+                        </ul>
+                    </li>
+                    <li id="penjualan">
+                        <a href="{{url('proses')}}">
+                            <i class="material-icons">shopping_cart</i>
+                            <span>Penjualan</span>
                         </a>
                     </li>
-                    @foreach ($menu as $r)
-                      @if (count($r->Menu->Submenu) != 0)
-                        <li id="{{$r->Menu->id_menu}}">
-                            <a href="javascript:void(0);" class="menu-toggle">
-                                <i class="material-icons">{{$r->Menu->icon_menu}}</i>
-                                <span>{{$r->Menu->nama_menu}}</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li id="{{$r->Menu->id_menu}}">
-                                    <a href="{{url($base.$r->Menu->link_menu)}}">{{$r->Menu->nama_menu}}</a>
-                                </li>
-                                @foreach ($r->Menu->Submenu as $s)
-                                  <li id="{{$s->id_submenu}}">
-                                      <a href="{{url($base.$s->link_submenu)}}">{{$s->nama_submenu}}</a>
-                                  </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                      @else
-                        <li id="{{$r->Menu->id_menu}}">
-                            <a href="{{url($base.$r->Menu->link_menu)}}">
-                                <i class="material-icons">{{$r->Menu->icon_menu}}</i>
-                                <span>{{$r->Menu->nama_menu}}</span>
-                            </a>
-                        </li>
-                      @endif
-                    @endforeach
+                    <!--
+                    <li id="">
+                        <a href="javascript:void(0);" class="menu-toggle">
+                            <i class="material-icons"></i>
+                            <span>}</span>
+                        </a>
+                        <ul class="ml-menu">
+                            <li id="">
+                                <a href=""></a>
+                            </li>
+                            <li id="">
+                                <a href=""></a>
+                            </li>
+                        </ul>
+                    </li> -->
+
                 </ul>
             </div>
             <!-- #Menu -->
             <!-- Footer -->
             <div class="legal">
-                <div class="copyright">
+                <!--<div class="copyright">
                     &copy; 2017 <a href="https://progress.or.id">Ormawa Manager - PROGRESS DEV</a>
-                </div>
+                </div> -->
                 <div class="version">
                     <b>Version: </b> 1.0 Beta
                 </div>
@@ -187,12 +197,23 @@
 
     <!-- Waves Effect Plugin Js -->
     <script src="{{asset('plugins/node-waves/waves.js')}}"></script>
-    
+    <!-- Autosize Plugin Js -->
+    <script src="{{asset('plugins/autosize/autosize.js')}}"></script>
+
+    <!-- Moment Plugin Js -->
+    <script src="{{asset('plugins/momentjs/moment.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-select/js/bootstrap-select.js')}}"></script>
     <script src="{{asset('plugins/jquery-inputmask/jquery.inputmask.bundle.js')}}"></script>
+    <script src="{{asset('plugins/jquery-datatable/jquery.dataTables.js')}}"></script>
+    <script src="{{asset('plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
+    <script src="{{asset('plugins/bootbox/bootbox.min.js')}}" charset="utf-8"></script>
     <!-- Custom Js -->
     <script src="{{asset('js/menu.js')}}" charset="utf-8"></script>
     <script src="{{asset('js/admin.js')}}"></script>
-
+    <script src="{{asset('js/pages/tables/jquery-datatable.js')}}"></script>
+    <script src="{{asset('js/pages/forms/basic-form-elements.js')}}"></script>
+    @yield('js')
     <!-- Demo Js -->
     <script src="{{asset('js/demo.js')}}"></script>
 

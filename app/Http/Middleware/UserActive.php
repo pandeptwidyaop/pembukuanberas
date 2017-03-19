@@ -20,7 +20,7 @@ class UserActive
         if (Auth::user()->active != 1) {
           Session::flash('alert','User ID anda sedang di nonaktifkan');
           Auth::logout();
-          return redirect('/');;
+          return redirect('/login');;
         }
         return $next($request);
     }

@@ -17,10 +17,13 @@ class CreateBerasbelisTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_berasbeli');
-            $table->integer('harga_berasbeli');
-            $table->integer('jumlah_berasbeli');
+            $table->double('harga_berasbeli',10,2);
+            $table->double('jumlah_berasbeli',10,2);
             $table->string('penjual_berasbeli');
             $table->timestamps();
+        });
+        Schema::table('berasbelis', function(Blueprint $table){
+          $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -11,10 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => 'auth'], function(){
+  Route::group(['middleware' => 'active'], function(){
+    Route::get('/', function(){
+      return redirect('gudang/stok');;
+    });
+    Route::get('gudang', function(){
+      return redirect('gudang/stok');;
+    });
+    Route::resource('gudang/stok','GudangController');
+    Route::resource('gudang/gabah','GabahController');
+    Route::resource('gudang/jemurgabah','JemurgabahController');
+    Route::resource('gudang/giling','GilingController');
+    Route::resource('gudang/beras','BerasController');
+    Route::resource('gudang/beliberas','BerasbeliController');
+});
+
+});
