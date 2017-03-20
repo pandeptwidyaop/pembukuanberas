@@ -24,6 +24,12 @@ function getActiveMenu(){
   }else if (add.search('gudang/beliberas') > 0) {
     $('#gudang').addClass('active');
     $('#berasbeli').addClass('active');
+  }else if (add.search('gudang/sekam') > 0) {
+    $('#gudang').addClass('active');
+    $('#sekam').addClass('active');
+  }else if(add.search('gudang/dedak') > 0){
+    $('#gudang').addClass('active');
+    $('#dedak').addClass('active');
   }
 
 }

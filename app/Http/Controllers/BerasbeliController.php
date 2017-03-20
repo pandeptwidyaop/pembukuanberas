@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Berasbeli;
+use App\Gudang;
 use Auth;
 use Session;
 
@@ -39,6 +40,8 @@ class BerasbeliController extends Controller
     public function store(Request $request)
     {
       $data = $request->except('_token');
+      $data['user_id'] = Auth::user()->id;
+      $data['tanggal_berasbeli'] = date('Y-m-d',strtotime($data['tanggal_berasbeli']));
       $beras = new Berasbeli;
       $beras->fill($data);
       $stok = Gudang::where('tipe_barang_gudang','beras')->first()->stok_barang_gudang;
@@ -47,8 +50,11 @@ class BerasbeliController extends Controller
         Gudang::where('tipe_barang_gudang','beras')->update(['stok_barang_gudang' => $stok]);
         Session::flash('alert','Berhasil menambah data pemebelian beras.');
         Session::flash('alert-class','alert-success');
+      }else {
+        Session::flash('alert','Gagal menambah data pemebelian beras.');
+        Session::flash('alert-class','alert-danger');
       }
-      return ;
+      return redirect('gudang/beliberas');
     }
 
     /**
@@ -70,7 +76,8 @@ class BerasbeliController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Berasbeli::where('id',$id)->get();
+        return view('berasbeli.edit',compact('data'));
     }
 
     /**
@@ -82,7 +89,28 @@ class BerasbeliController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token','_method');
+        $data['user_id'] = Auth::user()->id;
+        $data['tanggal_berasbeli'] = date('Y-m-d',strtotime($data['tanggal_berasbeli']));
+        $stok = Gudang::where('tipe_barang_gudang','beras')->first()->stok_barang_gudang;
+        $jml_bf = Berasbeli::where('id',$id)->first()->jumlah_berasbeli;
+        $jml_af = $data['jumlah_berasbeli'];
+        if ($jml_bf < $jml_af) {
+          //penambahan
+          $stok += $jml_af - $jml_bf ;
+        }elseif ($jml_bf > $jml_af) {
+          //pengurangan
+          $stok -= $jml_bf - $jml_af;
+        }
+        if (Berasbeli::where('id',$id)->update($data)) {
+          Gudang::where('tipe_barang_gudang','beras')->update(['stok_barang_gudang' => $stok]);
+          Session::flash('alert','Berhasil menyimpan data pemebelian beras.');
+          Session::flash('alert-class','alert-success');
+        }else {
+          Session::flash('alert','Gagal menyimpan data pemebelian beras.');
+          Session::flash('alert-class','alert-danger');
+        }
+        return redirect('gudang/beliberas');;
     }
 
     /**
@@ -93,6 +121,17 @@ class BerasbeliController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $stok = Gudang::where('tipe_barang_gudang','beras')->first()->stok_barang_gudang;
+        $stok -= Berasbeli::where('id',$id)->first()->jumlah_berasbeli;
+        if (Berasbeli::find($id)->delete()) {
+          Gudang::where('tipe_barang_gudang','beras')->update(['stok_barang_gudang' => $stok]);
+          Session::flash('alert','Berhasil menghapus data pembelian beras');
+          Session::flash('alert-class','alert-success');
+        }else {
+          Session::flash('alert','Gagal menghapus data pembelian beras');
+          Session::flash('alert-class','alert-danger');
+        }
+
+        return redirect('gudang/beliberas');;
     }
 }

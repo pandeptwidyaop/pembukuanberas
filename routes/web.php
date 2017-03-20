@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('gudang/giling','GilingController');
     Route::resource('gudang/beras','BerasController');
     Route::resource('gudang/beliberas','BerasbeliController');
+    Route::resource('gudang/sekam','SekamController');
+    Route::get('gudang/sekam/count/{id}','SekamController@count');
+    Route::resource('gudang/dedak','DedakController');
 });
 
 });

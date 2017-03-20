@@ -20,7 +20,7 @@
               <div class="card">
                   <div class="header bg-green">
                       <h2>
-                          {{$r->nama_barang_gudang}} <small>Rp. {{number_format($r->harga_barang_gudang,0,",",".")}}</small>
+                          {{$r->nama_barang_gudang}} <small>Rp. {{number_format($r->harga_barang_gudang,0,",",".")}} / {{($r->tipe_barang_gudang == 'sekam') ? 'truk' : 'kg'}}</small>
                       </h2>
                       <ul class="header-dropdown m-r--5">
                           <li class="dropdown">

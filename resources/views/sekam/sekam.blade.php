@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <div class="block-header">
           <h2>
-              DATA BERAS
+              DATA SEKAM
           </h2>
       </div>
       <div class="row clearfix">
@@ -12,7 +12,7 @@
               <div class="card">
                   <div class="header">
                       <h2>
-                          DATA BERAS DARI PEMBELIAN
+                          DATA SEKAM DARI PENGGILINGAN GABAH
                       </h2>
                       <ul class="header-dropdown m-r--5">
                           <li class="dropdown">
@@ -20,7 +20,7 @@
                                   <i class="material-icons">more_vert</i>
                               </a>
                               <ul class="dropdown-menu pull-right">
-                                  <li><a href="{{url('gudang/beliberas/create')}}">Tambah Beras Pembelian</a></li>
+                                  <li><a href="{{url('gudang/sekam/create')}}">Tambah Sekam</a></li>
                               </ul>
                           </li>
                       </ul>
@@ -36,24 +36,20 @@
                           <thead>
                               <tr>
                                 <td width="3%"></td>
-                                <td>Kode</td>
                                 <td>Tanggal</td>
-                                <td>Penjual</td>
-                                <td>Jumlah</td>
-                                <td>Harga</td>
-                                <td>Total</td>
+                                <td>Kode Gabah</td>
+                                <td>Jumlah Beras</td>
+                                <td>Jumlah Sekam</td>
                                 <td>User</td>
                               </tr>
                           </thead>
                           <tfoot>
                               <tr>
                                 <td></td>
-                                <td>Kode</td>
                                 <td>Tanggal</td>
-                                <td>Penjual</td>
-                                <td>Jumlah</td>
-                                <td>Harga</td>
-                                <td>Total</td>
+                                <td>Kode Gabah</td>
+                                <td>Jumlah Beras</td>
+                                <td>Jumlah Sekam</td>
                                 <td>User</td>
                               </tr>
                           </tfoot>
@@ -66,18 +62,16 @@
                                         <span class="caret"></span>
                                       </button>
                                       <ul class="dropdown-menu">
-                                          <li><a href="{{url('gudang/beliberas/'.$r->id.'/edit')}}" class=" waves-effect waves-block">Edit</a></li>
+                                          <li><a href="{{url('gudang/sekam/'.$r->id.'/edit')}}" class=" waves-effect waves-block">Edit</a></li>
                                           <li role="separator" class="divider"></li>
-                                          <li><a href="javascript:void(0);" class=" waves-effect waves-block" onclick="hapusBeras({{$r->id}})">Hapus</a></li>
+                                          <li><a href="javascript:void(0);" class=" waves-effect waves-block" onclick="hapusSekam({{$r->id}})">Hapus</a></li>
                                       </ul>
                                   </div>
                                 </td>
-                                <td>{{$r->id}}</td>
-                                <td>{{date('d F Y',strtotime($r->tanggal_berasbeli))}}</td>
-                                <td>{{$r->penjual_berasbeli}}</td>
-                                <td>{{number_format($r->jumlah_berasbeli,2,',','.')}} Kg</td>
-                                <td>Rp. {{number_format($r->harga_berasbeli,2,',','.')}}</td>
-                                <td>Rp. {{number_format(($r->harga_berasbeli * $r->jumlah_berasbeli),2,',','.')}}</td>
+                                <td>{{date('d F Y',strtotime($r->tanggal_masuk_sekam))}}</td>
+                                <td><a href="{{url('gudang/gabah/'.$r->Gabah->id)}}">{{$r->Gabah->id}}</a></td>
+                                <td>{{number_format($r->Gabah->Beras->jumlah_beras,2,',','.')}} Kg</td>
+                                <td>{{number_format($r->jumlah_sekam,2,',','.')}} truk</td>
                                 <td>{{$r->User->name}}</td>
                               </tr>
                             @endforeach
@@ -97,9 +91,9 @@
 @endsection
 @section('js')
   <script type="text/javascript">
-    function hapusBeras(id){
+    function hapusSekam(id){
         bootbox.confirm({
-          message: "Apakah anda ingin menghapus data beras ini ?",
+          message: "Apakah anda ingin menghapus data sekam ini ?",
           buttons: {
               confirm: {
                   label: 'Hapus',
@@ -112,7 +106,7 @@
           },
           callback: function (result) {
               if (result) {
-                $('#formHapus').attr('action', '{{url('gudang/beliberas')}}/'+id);
+                $('#formHapus').attr('action', '{{url('gudang/sekam')}}/'+id);
                 $('#formHapus').submit();
               }
           }
