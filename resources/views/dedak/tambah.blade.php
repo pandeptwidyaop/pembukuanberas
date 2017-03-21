@@ -7,7 +7,7 @@
               <div class="card">
                   <div class="header">
                       <h2>
-                          EDIT BERAS HASIL GILING GABAH
+                          TAMBAH DEDAK DARI PENGGILINGAN GABAH
                       </h2>
                       <ul class="header-dropdown m-r--5">
                           <li class="dropdown">
@@ -15,7 +15,7 @@
                                   <i class="material-icons">more_vert</i>
                               </a>
                               <ul class="dropdown-menu pull-right">
-                                  <li><a href="{{url('gudang/beras')}}">Kembali</a></li>
+                                  <li><a href="{{url('gudang/dedak')}}">Kembali</a></li>
 
                               </ul>
                           </li>
@@ -31,9 +31,7 @@
                           @endforeach
                       </div>
                     @endif
-                    @foreach ($data as $r)
-                      <form class="form-horizontal" action="{{url('gudang/beras/'.$r->id)}}" method="post">
-                        <input type="hidden" name="_method" value="PUT">
+                      <form class="form-horizontal" action="{{url('gudang/dedak')}}" method="post">
                         {{csrf_field()}}
                         <div class="row clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -43,7 +41,12 @@
                               <div class="form-group">
                                   <div class="form-line">
                                     <select class="form-control show-tick" data-live-search="true" name="gabah_id" required="">
-                                      <option value="{{$r->Gabah->id}}" selected="">{{$r->Gabah->id.' - '.date(' d F Y',strtotime($r->Gabah->tanggal_masuk_gabah)).' - '}}{{($r->tipe_gabah == 'gabah_kering') ? 'Gabah Kering' : 'Gabah Basah'}} </option>
+                                        <option value="">Pilih Gabah</option>
+                                        @foreach ($data as $r)
+                                          @if (count($r->Giling) == 1 && count($r->Dedak) == 0)
+                                            <option value="{{$r->id}}">{{$r->id.' - '.date('d F Y',strtotime($r->tanggal_masuk_gabah)).' - '.number_format($r->jumlah_gabah,2,',','.')}} Kg Gabah</option>
+                                          @endif
+                                        @endforeach
                                     </select>
                                   </div>
                               </div>
@@ -56,30 +59,30 @@
                               <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" class="datepicker form-control" placeholder="Pilih tanggal" name="tanggal_masuk_beras" required="" value="{{date('d F Y',strtotime($r->tanggal_masuk_beras))}}">
+                                        <input type="text" class="datepicker form-control" placeholder="Pilih tanggal" name="tanggal_masuk_dedak" required="">
                                     </div>
                                 </div>
                               </div>
                           </div>
                           <div class="row clearfix">
                               <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                  <label for="p">Jumlah</label>
+                                  <label for="jmlSekam">Jumlah</label>
                               </div>
                               <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                          <input type="text" id="p" class="form-control" placeholder="Jumlah beras kg" name="jumlah_beras" required="" value="{{$r->jumlah_beras}}">
+                                          <input type="text"  class="form-control" placeholder="Jumlah dedak" name="jumlah_dedak" required="">
                                       </div>
+
                                   </div>
                               </div>
                           </div>
                           <div class="row clearfix">
                               <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                                  <button type="submit" class="btn btn-primary m-t-15 waves-effect">Simpan</button>
+                                  <button type="submit" class="btn btn-primary m-t-15 waves-effect">Tambah</button>
                               </div>
                           </div>
                       </form>
-                    @endforeach
                   </div>
               </div>
           </div>

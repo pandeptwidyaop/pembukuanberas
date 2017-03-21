@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\BerasRequest;
 use App\Beras;
 use App\Gabah;
 use App\Gudang;
@@ -39,7 +40,7 @@ class BerasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BerasRequest $request)
     {
         $data = $request->except('_token');
         $data['user_id'] = Auth::user()->id;
@@ -95,7 +96,7 @@ class BerasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BerasRequest $request, $id)
     {
         $data = $request->except('_token','_method');
         $data['user_id'] = Auth::user()->id;

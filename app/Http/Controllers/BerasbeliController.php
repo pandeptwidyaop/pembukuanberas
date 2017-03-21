@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\BerasbeliRequest;
 use App\Berasbeli;
 use App\Gudang;
 use Auth;
@@ -37,7 +38,7 @@ class BerasbeliController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BerasbeliRequest $request)
     {
       $data = $request->except('_token');
       $data['user_id'] = Auth::user()->id;
@@ -87,7 +88,7 @@ class BerasbeliController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BerasbeliRequest $request, $id)
     {
         $data = $request->except('_token','_method');
         $data['user_id'] = Auth::user()->id;

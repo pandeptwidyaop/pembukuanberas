@@ -141,27 +141,34 @@
                         </ul>
                     </li>
                     <li id="penjualan">
-                        <a href="{{url('proses')}}">
+                        <a href="{{url('penjualan')}}">
                             <i class="material-icons">shopping_cart</i>
                             <span>Penjualan</span>
                         </a>
                     </li>
-                    <!--
-                    <li id="">
+                    <li id="kepegawaian">
                         <a href="javascript:void(0);" class="menu-toggle">
-                            <i class="material-icons"></i>
-                            <span>}</span>
+                            <i class="material-icons">group</i>
+                            <span>Kepegawaian</span>
                         </a>
                         <ul class="ml-menu">
-                            <li id="">
-                                <a href=""></a>
+                            <li id="pegawai">
+                                <a href="{{url('kepegawaian/pegawai')}}">Pegawai</a>
                             </li>
-                            <li id="">
-                                <a href=""></a>
+                            <li id="absensi">
+                                <a href="{{url('kepegawaian/absen')}}">Absensi</a>
+                            </li>
+                            <li id="penggajian">
+                                <a href="{{url('kepegawaian/gaji')}}">Penggajian</a>
                             </li>
                         </ul>
-                    </li> -->
-
+                    </li>
+                    <li id="laporan">
+                        <a href="{{url('laporan')}}">
+                            <i class="material-icons">print</i>
+                            <span>Laporan</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- #Menu -->

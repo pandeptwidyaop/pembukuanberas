@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('gudang/sekam','SekamController');
     Route::get('gudang/sekam/count/{id}','SekamController@count');
     Route::resource('gudang/dedak','DedakController');
+    Route::resource('penjualan','PenjualanController');
 });
 
 });
