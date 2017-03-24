@@ -30,6 +30,11 @@ function getActiveMenu(){
   }else if(add.search('gudang/dedak') > 0){
     $('#gudang').addClass('active');
     $('#dedak').addClass('active');
+  }else if (add.search('/penjualan') > 0) {
+    $('#penjualan').addClass('active');
+  }else if (add.search('/kepegawaian/pegawai') > 0) {
+    $('#kepegawaian').addClass('active');
+    $('#pegawai').addClass('active');
   }
 
 }

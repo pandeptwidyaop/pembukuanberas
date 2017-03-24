@@ -18,5 +18,9 @@ class Gudang extends Model
       return $this->belongsTo('App\User');
     }
 
+    public function Penjualanitem(){
+      return $this->hasMany('App\Penjualanitem');
+    }
+
 
 }

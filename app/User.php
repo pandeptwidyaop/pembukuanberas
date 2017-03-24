@@ -54,6 +54,13 @@ class User extends Authenticatable
     public function Dedak(){
       return $this->hasMany('App\Dedak');
     }
-    
+
+    public function Penjualan(){
+      return $this->hasMany('App\Penjualan');
+    }
+
+    public function Pegawai(){
+      return $this->hasMany('Aoo\Pegawai');
+    }
 
 }

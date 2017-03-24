@@ -215,6 +215,8 @@
     <script src="{{asset('plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js')}}"></script>
     <script src="{{asset('plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js')}}"></script>
     <script src="{{asset('plugins/bootbox/bootbox.min.js')}}" charset="utf-8"></script>
+    <script src="{{asset('plugins/editable-table/mindmup-editabletable.js')}}"></script>
+    <script src="{{asset('js/pages/tables/editable-table.js')}}"></script>
     <!-- Custom Js -->
     <script src="{{asset('js/menu.js')}}" charset="utf-8"></script>
     <script src="{{asset('js/admin.js')}}"></script>
