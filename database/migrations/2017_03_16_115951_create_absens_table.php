@@ -16,16 +16,11 @@ class CreateAbsensTable extends Migration
         Schema::create('absens', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('pegawai_id')->unsigned();
-            $table->date('tanggal_absen');
-            $table->boolean('absen')->default(0);
-            $table->integer('waktu_absen');
-            $table->enum('tipe_absen',['masuk','keluar']);
+            $table->date('tanggal');
             $table->timestamps();
         });
         Schema::table('absens', function(Blueprint $table){
           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-          $table->foreign('pegawai_id')->references('id')->on('pegawais')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

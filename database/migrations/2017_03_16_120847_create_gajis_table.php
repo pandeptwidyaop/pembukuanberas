@@ -15,8 +15,7 @@ class CreateGajisTable extends Migration
     {
         Schema::create('gajis', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('gaji',['pokok','lembur']);
-            $table->integer('jumlah_gaji');
+            $table->double('gaji',10,2);
             $table->timestamps();
         });
     }

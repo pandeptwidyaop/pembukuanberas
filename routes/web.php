@@ -33,6 +33,17 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('penjualan','PenjualanController');
     Route::get('penjualan/barang/{tipe}','PenjualanController@barang');
     Route::resource('kepegawaian/pegawai','PegawaiController');
+    Route::resource('kepegawaian/absen','AbsenController');
+    Route::get('kepegawaian/absen/absensi/{id}','KehadiranController@index');
+    Route::post('kepegawaian/absen/absensi/{absen}/set/{id}/{tipe}','KehadiranController@absen');
+    Route::resource('kepegawaian/penggajian','PenggajianController');
+    Route::get('kepegawaian/penggajian/bulan/{bulan}/tahun/{tahun}','PenggajianController@penggajian');
+    Route::get('kepegawaian/penggajian/detail/bulan/{bulan}/tahun/{tahun}/pegawai/{pegawai}/{gaji}','PenggajianController@detailgaji');
+    Route::get('kepegawaian/gaji','GajiController@getGaji');
+    Route::post('kepegawaian/gaji','GajiController@setGaji');
+    Route::get('kepegawaian/penggajian/proses/bulan/{bulan}/tahun/{tahun}','GajiController@prosesGaji');
+    Route::get('generate/slipgaji/{bulan}/{tahun}','GeneratePDFController@generateSlipGaji');
+    Route::resource('/profile','ProfileController');
 });
 
 });

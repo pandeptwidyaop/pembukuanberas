@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'PEMBUKUAN GUDANG BERAS',
+    'name' => 'UD. KEMBANG MERTHA',
 
     /*
     |--------------------------------------------------------------------------
@@ -176,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Barryvdh\Snappy\ServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
 
     ],
@@ -227,6 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'PDFS' => Barryvdh\Snappy\Facades\SnappyPdf::class,
     ],
 
 ];

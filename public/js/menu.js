@@ -35,6 +35,12 @@ function getActiveMenu(){
   }else if (add.search('/kepegawaian/pegawai') > 0) {
     $('#kepegawaian').addClass('active');
     $('#pegawai').addClass('active');
+  }else if (add.search('/kepegawaian/absen') > 0) {
+    $('#kepegawaian').addClass('active');
+    $('#absensi').addClass('active');
+  }else if (add.search('/kepegawaian/penggajian') > 0) {
+    $('#kepegawaian').addClass('active');
+    $('#penggajian').addClass('active');
   }
 
 }

@@ -159,7 +159,7 @@
                                 <a href="{{url('kepegawaian/absen')}}">Absensi</a>
                             </li>
                             <li id="penggajian">
-                                <a href="{{url('kepegawaian/gaji')}}">Penggajian</a>
+                                <a href="{{url('kepegawaian/penggajian')}}">Penggajian</a>
                             </li>
                         </ul>
                     </li>
@@ -217,11 +217,13 @@
     <script src="{{asset('plugins/bootbox/bootbox.min.js')}}" charset="utf-8"></script>
     <script src="{{asset('plugins/editable-table/mindmup-editabletable.js')}}"></script>
     <script src="{{asset('js/pages/tables/editable-table.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-notify/bootstrap-notify.js')}}"></script>
     <!-- Custom Js -->
     <script src="{{asset('js/menu.js')}}" charset="utf-8"></script>
     <script src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/pages/tables/jquery-datatable.js')}}"></script>
     <script src="{{asset('js/pages/forms/basic-form-elements.js')}}"></script>
+    <script src="{{asset('js/pages/ui/notifications.js')}}"></script>
     @yield('js')
     <!-- Demo Js -->
     <script src="{{asset('js/demo.js')}}"></script>
