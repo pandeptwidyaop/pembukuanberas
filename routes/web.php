@@ -44,6 +44,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('kepegawaian/penggajian/proses/bulan/{bulan}/tahun/{tahun}','GajiController@prosesGaji');
     Route::get('generate/slipgaji/{bulan}/{tahun}','GeneratePDFController@generateSlipGaji');
     Route::resource('/profile','ProfileController');
+    Route::get('/laporan/harian','LaporanController@harian');
+    Route::group(['middleware' => 'level:1'],function(){
+      Route::resource('/users','UsersmanagementController');
+      Route::get('users/{id}/change','UsersmanagementController@setStatus');
+    });
 });
 
 });

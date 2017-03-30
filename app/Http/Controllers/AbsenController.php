@@ -8,6 +8,7 @@ use App\Pegawai;
 use App\Kehadiran;
 use Session;
 use Auth;
+use Carbon\Carbon;
 
 class AbsenController extends Controller
 {
@@ -29,7 +30,7 @@ class AbsenController extends Controller
      */
     public function create()
     {
-        $date = date('Y-m-d');
+        $date = date('Y-m-d',strtotime(Carbon::now('Asia/Jakarta')));
         if (Absen::where('tanggal',$date)->get()->count() == 1) {
           Session::flash('alert','Tidak bisa melakukan absensi di tanggal yang sama.');
           Session::flash('alert-class','alert-danger');

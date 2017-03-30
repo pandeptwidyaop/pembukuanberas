@@ -41,6 +41,11 @@ function getActiveMenu(){
   }else if (add.search('/kepegawaian/penggajian') > 0) {
     $('#kepegawaian').addClass('active');
     $('#penggajian').addClass('active');
+  }else if (add.search('/profile') > 0) {
+    $('#gudang').addClass('active');
+  }else if (add.search('/users') > 0) {
+    $('#users').addClass('active');
+
   }
 
 }

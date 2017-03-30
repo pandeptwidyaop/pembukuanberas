@@ -164,11 +164,24 @@
                         </ul>
                     </li>
                     <li id="laporan">
-                        <a href="{{url('laporan')}}">
+                        <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">print</i>
                             <span>Laporan</span>
                         </a>
+                        <ul class="ml-menu">
+                            <li id="harian">
+                                <a href="{{url('laporan/harian#print')}}">Print Laporan Hari Ini</a>
+                            </li>
+                        </ul>
                     </li>
+                    @if (Auth::user()->level == 1)
+                      <li id="users">
+                          <a href="{{url('users')}}">
+                              <i class="material-icons">group</i>
+                              <span>Users</span>
+                          </a>
+                      </li>
+                    @endif
                 </ul>
             </div>
             <!-- #Menu -->

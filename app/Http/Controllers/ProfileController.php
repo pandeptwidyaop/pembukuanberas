@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
+use Session;
 
 class ProfileController extends Controller
 {
@@ -47,7 +49,7 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -70,7 +72,27 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->except('_token','_method');
+        if ($data['password'] != null) {
+          if ($data['password'] == $data['password2']) {
+            User::where('id',$id)->update([
+              'name' => $data['name'],
+              'password' => Hash::make($data['password'])
+            ]);
+            Session::flash('alert','Profile dan akun anda sudah di perbarui');
+            Session::flash('alert-class','alert-success');
+          }else {
+            Session::flash('alert','Pastikan password yang anda masukan sama.');
+            Session::flash('alert-class','alert-danger');
+          }
+        }else{
+          User::where('id',$id)->update([
+            'name' => $data['name']
+          ]);
+          Session::flash('alert','Profile dan akun anda sudah di perbarui');
+          Session::flash('alert-class','alert-success');
+        }
+        return redirect('/profile');
     }
 
     /**
@@ -81,6 +103,6 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

@@ -2,17 +2,13 @@
 @section('content')
   <section class="content">
     <div class="container-fluid">
-      <div class="block-header">
-          <h2>PROFILE</h2>
-      </div>
-
       <!-- Vertical Layout -->
       <div class="row clearfix">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="card">
                   <div class="header">
                       <h2>
-                          EDIT PROFILE
+                          TAMBAH USER
                       </h2>
 
                       <ul class="header-dropdown m-r--5">
@@ -21,7 +17,7 @@
                                   <i class="material-icons">more_vert</i>
                               </a>
                               <ul class="dropdown-menu pull-right">
-                                  <li><a href="{{url('/')}}">Kembali</a></li>
+                                  <li><a href="{{url('/users')}}">Kembali</a></li>
                               </ul>
                           </li>
                       </ul>
@@ -34,36 +30,35 @@
                           {{  Session::get('alert')}}
                       </div>
                     @endif
-                      <form action="{{url('/profile/'.Auth::user()->id)}}" method="POST">
-                        <input type="hidden" name="_method" value="PUT">
+                      <form action="{{url('/users')}}" method="POST">
                         {{csrf_field()}}
                           <label for="email_address">Username</label>
                           <div class="form-group">
                               <div class="form-line">
-                                  <input type="text" id="email_address" class="form-control" value="{{Auth::user()->username}}" disabled="">
+                                  <input type="text" id="email_address" class="form-control" placeholder="Masukan username" name="username" required="">
                               </div>
                           </div>
                           <label for="nama">Nama</label>
                           <div class="form-group">
                             <div class="form-line">
-                              <input type="text" class="form-control" name="name" value="{{Auth::user()->name}}">
+                              <input type="text" class="form-control" name="name" placeholder="Masukan nama" required="">
                             </div>
                           </div>
                           <label for="password">Password</label>
                           <div class="form-group">
                               <div class="form-line">
-                                  <input type="password" id="password" class="form-control" placeholder="Enter your password" name="password">
+                                  <input type="password" id="password" class="form-control" placeholder="Masukan password" name="password" required="">
                               </div>
                           </div>
                           <label for="password2">Retype Password</label>
                           <div class="form-group">
                               <div class="form-line">
-                                  <input type="password" id="password2" class="form-control" placeholder="Enter your password again" name="password2">
+                                  <input type="password" id="password2" class="form-control" placeholder="Masukan password lagi" name="password2" required="">
                               </div>
                           </div>
-                          <small class="help">Kosongkan jika tidak ingin merubah password.</small>
+                        
                           <br>
-                          <button type="submit" class="btn btn-primary m-t-15 waves-effect">Simpan</button>
+                          <button type="submit" class="btn btn-primary m-t-15 waves-effect">Tambah</button>
                       </form>
                   </div>
               </div>
