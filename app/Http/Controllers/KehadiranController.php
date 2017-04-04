@@ -7,6 +7,7 @@ use App\Pegawai;
 use App\Absen;
 use App\Kehadiran;
 use Carbon\Carbon;
+use Session;
 
 class KehadiranController extends Controller
 {
@@ -60,9 +61,11 @@ class KehadiranController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($absen,$id)
     {
-        //
+      $abs = Absen::where('id',$absen)->get();
+      $data = Kehadiran::where('id',$id)->get();
+      return view('absen.edit',compact('absen','id','data','abs'));
     }
 
     /**
@@ -72,9 +75,20 @@ class KehadiranController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $absen, $id)
     {
-        //
+        $data = $request->except('_token','_method');
+        $abs = Kehadiran::where('id',$id)->first();
+        $masuk = date('Y-m-d',strtotime($abs->waktu_masuk)).' '.$data['waktu_masuk'].':00';
+        $keluar = date('Y-m-d',strtotime($abs->waktu_keluar)).' '.$data['waktu_keluar'].':00';
+        if (Kehadiran::where('id',$id)->update(['waktu_masuk' => $masuk,'waktu_keluar' => $keluar])) {
+          Session::flash('alert','Berhasil menyimpan absensi');
+          Session::flash('alert-class','alert-success');
+        }else {
+          Session::flash('alert','Gagal menyimpan absensi');
+          Session::flash('alert-class','alert-danger');
+        }
+        return redirect('kepegawaian/absen/absensi/'.$absen);
     }
 
     /**

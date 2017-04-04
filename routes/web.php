@@ -36,9 +36,11 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('kepegawaian/absen','AbsenController');
     Route::get('kepegawaian/absen/absensi/{id}','KehadiranController@index');
     Route::post('kepegawaian/absen/absensi/{absen}/set/{id}/{tipe}','KehadiranController@absen');
+    Route::get('kepegawaian/absen/absensi/{absen}/{id}/edit','KehadiranController@edit');
+    Route::put('kepegawaian/absen/absensi/{absen}/{id}/edit','KehadiranController@update');
     Route::resource('kepegawaian/penggajian','PenggajianController');
     Route::get('kepegawaian/penggajian/bulan/{bulan}/tahun/{tahun}','PenggajianController@penggajian');
-    Route::get('kepegawaian/penggajian/detail/bulan/{bulan}/tahun/{tahun}/pegawai/{pegawai}/{gaji}','PenggajianController@detailgaji');
+    Route::get('kepegawaian/penggajian/detail/bulan/{bulan}/tahun/{tahun}/pegawai/{pegawai}/{gaji?}','PenggajianController@detailgaji');
     Route::get('kepegawaian/gaji','GajiController@getGaji');
     Route::post('kepegawaian/gaji','GajiController@setGaji');
     Route::get('kepegawaian/penggajian/proses/bulan/{bulan}/tahun/{tahun}','GajiController@prosesGaji');

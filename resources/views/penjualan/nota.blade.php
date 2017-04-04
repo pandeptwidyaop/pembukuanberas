@@ -30,7 +30,7 @@
                     <i class="material-icons">print</i>
                 </button>
                 <hr>
-                <div id="printArea">
+                <div id="printArea" style="font-size:10px">
                   @foreach ($data as $r)
                     <div class="row">
                       <div class="col-md-3">
@@ -97,7 +97,7 @@
                           <tbody>
                             <tr class="text-center">
                               <td><div style="padding-top: 70px;">(_______________)</div></td>
-                              <td ><div style="padding-top: 70px;">( I Ketut Tekes )</div></td>
+                              <td ><div style="padding-top: 70px;">( {{Auth::user()->name}})</div></td>
                             </tr>
                           </tbody>
                         </table>

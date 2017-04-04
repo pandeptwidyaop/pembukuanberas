@@ -182,6 +182,12 @@
                           </a>
                       </li>
                     @endif
+                    <li id="pengaturan">
+                        <a href="{{url('pengaturan')}}">
+                            <i class="material-icons">settings</i>
+                            <span>Pengaturan</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- #Menu -->

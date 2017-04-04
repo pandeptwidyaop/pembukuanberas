@@ -35,6 +35,7 @@
                     <table class="table table-bordered table-striped table-hover js-basic-example dataTable" width="100%">
                         <thead>
                             <tr>
+                                <th width="3%"></th>
                                 <th>Nama</th>
                                 <th>Absen Masuk</th>
                                 <th>Absen Keluar</th>
@@ -43,6 +44,7 @@
                         </thead>
                         <tfoot>
                             <tr>
+                              <th></th>
                               <th>Nama</th>
                               <th>Absen Masuk</th>
                               <th>Absen Keluar</th>
@@ -51,6 +53,11 @@
                         <tbody>
                           @foreach ($data as $r)
                             <tr>
+                              <td>
+                                <a type="button" class="btn bg-teal btn-circle waves-effect waves-circle waves-float" href="{{url('kepegawaian/absen/absensi/'.$id.'/'.$r->id.'/edit')}}">
+                                    <i class="material-icons">settings</i>
+                                </a>
+                              </td>
                               <td>{{$r->Pegawai->nama_pegawai}}</td>
                               <td>
                                 @if ($r->absen_masuk == 0)
