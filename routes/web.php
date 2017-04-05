@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function(){
       Route::resource('/users','UsersmanagementController');
       Route::get('users/{id}/change','UsersmanagementController@setStatus');
     });
+    Route::resource('/pengaturan','PengaturanController');
 });
 
 });

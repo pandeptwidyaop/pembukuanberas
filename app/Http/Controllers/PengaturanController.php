@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Gudang;
-use Auth;
 use Session;
-use App\Http\Requests\StokEditRequest;
+use App\Config;
 
-class GudangController extends Controller
+class PengaturanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,8 @@ class GudangController extends Controller
      */
     public function index()
     {
-      $data = Gudang::all();
-      return view('gudang.gudang',compact('data'));
+        $data = Config::orderBy('id','DESC')->first();
+        return view('pengaturan.pengaturan',compact('data'));
     }
 
     /**
@@ -39,7 +37,17 @@ class GudangController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $conf = new Config;
+        $conf->fill($data);
+        if ($conf->save()) {
+          Session::flash('alert','Berhasil menyimpan pengaturan.');
+          Session::flash('alert-class','alert-success');
+        }else {
+          Session::flash('alert','Berhasil menyimpan pengaturan.');
+          Session::flash('alert-class','alert-success');
+        }
+        return redirect('/pengaturan');
     }
 
     /**
@@ -61,8 +69,7 @@ class GudangController extends Controller
      */
     public function edit($id)
     {
-        $data = Gudang::where('tipe_barang_gudang',$id)->get();
-        return view('gudang.edit',compact('data'));;
+        //
     }
 
     /**
@@ -72,18 +79,9 @@ class GudangController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StokEditRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->except('_method','_token');
-        $data['user_id'] = Auth::user()->id;
-        if (Gudang::where('tipe_barang_gudang',$id)->update($data)) {
-          Session::flash('alert','Berhasil mengubah data stok gudang.');
-          Session::flash('alert-class','alert-success');
-        }else {
-          Session::flash('alert','Gagal mengubah data stok gudang.');
-          Session::flash('alert-class','alert-danger');
-        }
-        return redirect(url('gudang/stok'));
+        //
     }
 
     /**

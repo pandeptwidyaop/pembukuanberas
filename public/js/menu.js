@@ -45,7 +45,9 @@ function getActiveMenu(){
     $('#gudang').addClass('active');
   }else if (add.search('/users') > 0) {
     $('#users').addClass('active');
-
+  }
+  else if (add.search('/pengaturan') > 0) {
+    $('#pengaturan').addClass('active');
   }
 
 }

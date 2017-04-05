@@ -1,4 +1,8 @@
 @php
+  use App\Helpers\SiteConfig;
+
+  $config = new SiteConfig;
+
   switch (Auth::user()->level) {
     case '1':
       $base = 'root/';
@@ -10,6 +14,8 @@
 
       break;
   }
+
+
 @endphp
 
 <!DOCTYPE html>
@@ -18,7 +24,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <title>{{config('app.name')}}</title>
+    <title>{{$config->title()}}</title>
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -80,7 +86,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="bars"></a>
-                <a class="navbar-brand" href="{{url('/')}}">{{config('app.name')}}</a>
+                <a class="navbar-brand" href="{{url('/')}}">{{$config->title()}}</a>
             </div>
         </div>
     </nav>

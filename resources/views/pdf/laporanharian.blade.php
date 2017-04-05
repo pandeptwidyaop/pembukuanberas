@@ -1,11 +1,15 @@
+@php
+  use App\Helpers\SiteConfig;
 
+  $config = new SiteConfig;
+@endphp
 @extends('layouts.pdf')
 @section('content')
   <div class="row">
     <div class="col-md-12 col-xs-12 col-lg-12">
       <div class="text-center">
         <h1>LAPORAN HARIAN</h1>
-        <h2>{{config('app.name')}}</h2>
+        <h2>{{$config->title()}}</h2>
         <h4>TANGGAL {{date('d-m-Y',strtotime($now))}}</h4>
       </div>
       <table class="table table-bordered">

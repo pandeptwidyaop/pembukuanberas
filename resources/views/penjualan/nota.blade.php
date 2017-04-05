@@ -1,3 +1,8 @@
+@php
+  use App\Helpers\SiteConfig;
+
+  $config = new SiteConfig;
+@endphp
 @extends('layouts.template')
 @section('content')
   <section  class="content">
@@ -33,11 +38,13 @@
                 <div id="printArea" style="font-size:10px">
                   @foreach ($data as $r)
                     <div class="row">
-                      <div class="col-md-3">
-                        <h5>UD. KEMBANG MERTA</h5>
+                      <div class="col-md-4 text-center">
+                        <h4>{{$config->title()}}</h4>
+                        <p>Alamat {{$config->address()}}</p>
+                        <p>Telepon {{$config->telephone()}}</p>
                         <p><h6>NO NOTA : {{$r->id}}</h6></p>
                       </div>
-                      <div class="col-md-3 text-right">
+                      <div class="col-md-2 text-right">
                         <p>Badung {{date('d-m-Y',strtotime($r->tanggal_penjualan))}}</p>
                         <p>Nama : {{$r->pembeli_penjualan}}</p>
                       </div>
