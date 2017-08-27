@@ -100,7 +100,7 @@
                               <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
                                   <div class="form-line">
-                                    <select class="form-control show-tick" required="" name="tipe_gabah">
+                                    <select class="form-control show-tick" required="" name="tipe_gabah" width="100%">
                                       <option value="">Pilih</option>
                                       <option value="gabah_kering">KERING</option>
                                       <option value="gabah_basah">BASAH</option>
