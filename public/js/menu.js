@@ -32,6 +32,8 @@ function getActiveMenu(){
     $('#dedak').addClass('active');
   }else if (add.search('/penjualan') > 0) {
     $('#penjualan').addClass('active');
+  }else if (add.search('/pengeluaran')>0) {
+    $('#pengeluaran').addClass('active');
   }else if (add.search('/kepegawaian/pegawai') > 0) {
     $('#kepegawaian').addClass('active');
     $('#pegawai').addClass('active');

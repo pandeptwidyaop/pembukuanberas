@@ -23,7 +23,7 @@ class CreatePengeluaransTable extends Migration
             $table->bigInteger('total');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('pengeluarans')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

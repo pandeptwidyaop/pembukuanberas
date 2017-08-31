@@ -152,6 +152,12 @@
                             <span>Penjualan</span>
                         </a>
                     </li>
+                    <li id="pengeluaran">
+                        <a href="{{url('pengeluaran')}}">
+                            <i class="material-icons">account_balance_wallet</i>
+                            <span>Pengeluaran</span>
+                        </a>
+                    </li>
                     <li id="kepegawaian">
                         <a href="javascript:void(0);" class="menu-toggle">
                             <i class="material-icons">group</i>

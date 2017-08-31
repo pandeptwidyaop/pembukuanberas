@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -31,6 +32,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('gudang/sekam/count/{id}','SekamController@count');
     Route::resource('gudang/dedak','DedakController');
     Route::resource('penjualan','PenjualanController');
+    Route::resource('pengeluaran','PengeluaranController');
     Route::get('penjualan/barang/{tipe}','PenjualanController@barang');
     Route::resource('kepegawaian/pegawai','PegawaiController');
     Route::resource('kepegawaian/absen','AbsenController');
