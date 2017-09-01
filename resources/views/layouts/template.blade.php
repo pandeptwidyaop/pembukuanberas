@@ -133,10 +133,10 @@
                               <a href="{{url('gudang/gabah')}}">Gabah</a>
                           </li>
                           <li id="beras">
-                              <a href="{{url('gudang/beras')}}">Beras Gabah</a>
+                              <a href="{{url('gudang/beras')}}">Beras dari Gabah</a>
                           </li>
                           <li id="berasbeli">
-                              <a href="{{url('gudang/beliberas')}}">Beras Beli</a>
+                              <a href="{{url('gudang/beliberas')}}">Beras dari Pembelian</a>
                           </li>
                           <li id="sekam">
                               <a href="{{url('gudang/sekam')}}">Sekam</a>

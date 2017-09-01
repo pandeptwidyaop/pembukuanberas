@@ -75,7 +75,7 @@
                                 <td>{{$r->id}}</td>
                                 <td>{{date('d F Y',strtotime($r->tanggal_berasbeli))}}</td>
                                 <td>{{$r->penjual_berasbeli}}</td>
-                                <td>{{number_format($r->jumlah_berasbeli,2,',','.')}} Kg</td>
+                                <td>{{number_format($r->jumlah_berasbeli,2,',','.')}} Kg - {{$r->jumlah_kampil}} kampil</td>
                                 <td>Rp. {{number_format($r->harga_berasbeli,2,',','.')}}</td>
                                 <td>Rp. {{number_format(($r->harga_berasbeli * $r->jumlah_berasbeli),2,',','.')}}</td>
                                 <td>{{$r->User->name}}</td>
