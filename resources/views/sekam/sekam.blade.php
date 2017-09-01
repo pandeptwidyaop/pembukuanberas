@@ -71,7 +71,7 @@
                                 <td>{{date('d F Y',strtotime($r->tanggal_masuk_sekam))}}</td>
                                 <td><a href="{{url('gudang/gabah/'.$r->Gabah->id)}}">{{$r->Gabah->id}}</a></td>
                                 <td>{{number_format($r->Gabah->Beras->jumlah_beras,2,',','.')}} Kg</td>
-                                <td>{{number_format($r->jumlah_sekam,2,',','.')}} truk</td>
+                                <td>{{$r->jumlah_kampil}} kampil - {{number_format($r->jumlah_sekam,4,',','.')}} truk</td>
                                 <td>{{$r->User->name}}</td>
                               </tr>
                             @endforeach
