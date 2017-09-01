@@ -68,7 +68,7 @@
                                 </td>
                                 <td><a href="{{url('gudang/gabah/'.$r->Gabah->id)}}">{{$r->Gabah->id}}</a></td>
                                 <td>{{date('d F Y',strtotime($r->tanggal_masuk_beras))}}</td>
-                                <td>{{number_format($r->jumlah_beras,2,',','.')}} Kg</td>
+                                <td>{{number_format($r->jumlah_beras,2,',','.')}} Kg - {{$r->jumlah_kampil}} kampil</td>
                                 <td>{{$r->User->name}}</td>
                               </tr>
                             @endforeach

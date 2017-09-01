@@ -26,7 +26,8 @@ class BerasRequest extends FormRequest
         return [
           'gabah_id' => 'required',
           'tanggal_masuk_beras' => 'required|date',
-          'jumlah_beras' => 'required|regex:/^\d*(\.\d{2})?$/'
+          'jumlah_beras' => 'required|regex:/^\d*(\.\d{2})?$/',
+          'jumlah_kampil' => 'required'
         ];
     }
 }
