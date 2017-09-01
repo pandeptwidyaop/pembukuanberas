@@ -112,7 +112,7 @@ class KehadiranController extends Controller
     }
 
     public function absen($absen,$id,$tipe){
-      $waktu = Carbon::now('Asia/Jakarta');
+      $waktu = Carbon::now('Asia/Makassar');
       if ($tipe == 'masuk') {
         Kehadiran::where('id',$id)->update(['absen_masuk' => 1 , 'waktu_masuk' => $waktu]);
       }elseif ($tipe == 'keluar') {
