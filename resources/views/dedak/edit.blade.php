@@ -63,7 +63,7 @@
                           </div>
                           <div class="row clearfix">
                               <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                  <label for="jmlSekam">Jumlah</label>
+                                  <label for="jmlSekam">Jumlah Kilogram</label>
                               </div>
                               <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
@@ -71,6 +71,18 @@
                                           <input type="text"  class="form-control" placeholder="Jumlah dedak" name="jumlah_dedak" required="" value="{{number_format($r->jumlah_dedak,2,',','.')}}">
                                       </div>
 
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row clearfix">
+                              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                  <label for="jml">Jumlah Kampil</label>
+                              </div>
+                              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                          <input type="number" id="jml" class="form-control" placeholder="Kampil" name="jumlah_kampil" required="" value="{{$r->jumlah_kampil}}">
+                                      </div>
                                   </div>
                               </div>
                           </div>

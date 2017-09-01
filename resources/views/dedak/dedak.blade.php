@@ -69,7 +69,7 @@
                                   </div></th>
                                   <th><a href="{{url('gudang/gabah/'.$r->Gabah->id)}}">{{$r->Gabah->id}}</a></th>
                                   <th>{{date('d F Y',strtotime($r->tanggal_masuk_dedak))}}</th>
-                                  <th>{{number_format($r->jumlah_dedak,2,',','.')}} Kg</th>
+                                  <th>{{number_format($r->jumlah_dedak,2,',','.')}} Kg - {{$r->jumlah_kampil}} kampil</th>
                                   <th>{{$r->User->name}}</th>
                               </tr>
                             @endforeach
