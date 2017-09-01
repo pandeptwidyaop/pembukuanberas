@@ -41,7 +41,7 @@
                               @foreach ($data_gabah as $r)
                                 <td>{{$r->id}}</td>
                                 <td>{{date('d F Y', strtotime($r->tanggal_masuk_gabah))}}</td>
-                                <td>{{number_format($r->jumlah_gabah,2,',','.')}}</td>
+                                <td>{{number_format($r->jumlah_gabah,2,',','.')}} - {{$r->jumlah_kampil}} kampil</td>
                                 <td>{{$r->nama_penjual_gabah}}</td>
                                 <td>{{$r->penimbang_gabah}}</td>
                                 <td>Rp. {{number_format($r->harga_kiloan_gabah,2,',','.')}}</td>

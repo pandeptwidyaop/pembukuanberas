@@ -16,7 +16,8 @@ class Gabah extends Model
       'harga_kiloan_gabah',
       'nama_penjual_gabah',
       'tipe_gabah',
-      'user_id'
+      'user_id',
+      'jumlah_kampil'
     ];
 
     public function User(){

@@ -83,7 +83,7 @@
                                 <th><a href="{{url('gudang/gabah/'.$r->id)}}">{{$r->id}}</a></th>
                                 <th>{{date('d F Y', strtotime($r->tanggal_masuk_gabah))}}</th>
                                 <th>{{$r->nama_penjual_gabah}}</th>
-                                <th>{{number_format($r->jumlah_gabah,2,',','.')}} kg</th>
+                                <th>{{number_format($r->jumlah_gabah,2,',','.')}} kg - {{$r->jumlah_kampil}} kampil</th>
                                 <th>Rp. {{number_format($r->harga_kiloan_gabah,0,',','.')}}</th>
                                 <th>Rp. {{number_format(($r->jumlah_gabah * $r->harga_kiloan_gabah),2,',','.')}}</th>
                                 <th>{!!($r->tipe_gabah == 'gabah_basah') ? '<span class="label label-success">Basah</span>' : '<span class="label label-danger">Kering</span>'!!}</th>

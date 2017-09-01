@@ -10,7 +10,8 @@ class Dedak extends Model
       'gabah_id',
       'user_id',
       'tanggal_masuk_dedak',
-      'jumlah_dedak'
+      'jumlah_dedak',
+      'jumlah_kampil'
     ];
 
     public function Gabah(){

@@ -30,7 +30,7 @@ class TambahGabahRequest extends FormRequest
             'harga_kiloan_gabah' => 'required|regex:/^\d*(\.\d{2})?$/',
             'nama_penjual_gabah' => 'required',
             'tipe_gabah' => 'required',
-
+            'jumlah_kampil' => 'required'
         ];
     }
 
@@ -43,7 +43,8 @@ class TambahGabahRequest extends FormRequest
         'harga_kiloan_gabah.required' => 'Pastikan harga sudah diisi.',
         'harga_kiloan_gabah.regex' => 'Pastikan format harga sudah sesuai.',
         'nama_penjual_gabah.required' => 'Pastikan nama penjual sudah diisi.',
-        'tipe_gabah.required' => 'Pastikan tipe gabah sudah diisi.'
+        'tipe_gabah.required' => 'Pastikan tipe gabah sudah diisi.',
+        'jumlah_kampil.required' => 'Pastikan jumlah kampil gabah sudah diisi.'
       ];
     }
 }

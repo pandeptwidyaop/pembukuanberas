@@ -12,7 +12,8 @@ class Beras extends Model
       'user_id',
       'tanggal_masuk_beras',
       'jumlah_beras',
-      'gabah_id'
+      'gabah_id',
+      'jumlah_kampil'
     ];
 
     public function User(){

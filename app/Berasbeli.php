@@ -11,7 +11,8 @@ class Berasbeli extends Model
       'tanggal_berasbeli',
       'harga_berasbeli',
       'jumlah_berasbeli',
-      'penjual_berasbeli'
+      'penjual_berasbeli',
+      'jumlah_kampil'
     ];
 
     public function User(){

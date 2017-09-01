@@ -10,7 +10,8 @@ class Sekam extends Model
       'gabah_id',
       'user_id',
       'tanggal_masuk_sekam',
-      'jumlah_sekam'
+      'jumlah_sekam',
+      'jumlah_kampil'
     ];
 
     public function Gabah(){
