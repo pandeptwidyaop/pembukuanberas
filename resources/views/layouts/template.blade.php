@@ -29,7 +29,7 @@
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
-    <link href="{{asset('css/roboto.css')}}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link href="{{asset('css/material-icons.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Bootstrap Core Css -->

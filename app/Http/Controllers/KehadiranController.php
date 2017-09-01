@@ -63,8 +63,13 @@ class KehadiranController extends Controller
      */
     public function edit($absen,$id)
     {
-      $abs = Absen::where('id',$absen)->get();
-      $data = Kehadiran::where('id',$id)->get();
+      $abs = Absen::findOrFail($absen);
+      $data = Kehadiran::findOrFail($id);
+      if ($data->waktu_masuk == null) {
+        Session::flash('alert','Belum melakukan absensi.');
+        Session::flash('alert-class','alert-danger');
+        return back();
+      }
       return view('absen.edit',compact('absen','id','data','abs'));
     }
 
@@ -78,16 +83,20 @@ class KehadiranController extends Controller
     public function update(Request $request, $absen, $id)
     {
         $data = $request->except('_token','_method');
-        $abs = Kehadiran::where('id',$id)->first();
-        $masuk = date('Y-m-d',strtotime($abs->waktu_masuk)).' '.$data['waktu_masuk'].':00';
-        $keluar = date('Y-m-d',strtotime($abs->waktu_keluar)).' '.$data['waktu_keluar'].':00';
-        if (Kehadiran::where('id',$id)->update(['waktu_masuk' => $masuk,'waktu_keluar' => $keluar])) {
-          Session::flash('alert','Berhasil menyimpan absensi');
-          Session::flash('alert-class','alert-success');
-        }else {
-          Session::flash('alert','Gagal menyimpan absensi');
-          Session::flash('alert-class','alert-danger');
+        $abs = Kehadiran::findOrFail($id);
+        $masuk = $keluar = null;
+        if ($abs->waktu_masuk != null) {
+          $masuk = date('Y-m-d',strtotime($abs->waktu_masuk)).' '.$data['waktu_masuk'].':00';
         }
+        if ($abs->waktu_keluar != null) {
+          $keluar = date('Y-m-d',strtotime($abs->waktu_keluar)).' '.$data['waktu_keluar'].':00';
+        }
+        $kehadiran  = Kehadiran::findOrFail($id);
+        $kehadiran->waktu_masuk = $masuk;
+        $kehadiran->waktu_keluar = $keluar;
+        $kehadiran->save();
+        Session::flash('alert','Berhasil menyimpan absensi');
+        Session::flash('alert-class','alert-success');
         return redirect('kepegawaian/absen/absensi/'.$absen);
     }
 
@@ -107,7 +116,13 @@ class KehadiranController extends Controller
       if ($tipe == 'masuk') {
         Kehadiran::where('id',$id)->update(['absen_masuk' => 1 , 'waktu_masuk' => $waktu]);
       }elseif ($tipe == 'keluar') {
-        Kehadiran::where('id',$id)->update(['absen_keluar' => 1 , 'waktu_keluar' => $waktu]);
+        if (Kehadiran::findOrFail($id)->waktu_masuk != null) {
+          Kehadiran::where('id',$id)->update(['absen_keluar' => 1 , 'waktu_keluar' => $waktu]);
+        }else {
+          Session::flash('alert','Belum melakukan absensi masuk.');
+          Session::flash('alert-class','alert-danger');
+          return back();
+        }
       }
       return redirect('kepegawaian/absen/absensi/'.$absen);
     }
