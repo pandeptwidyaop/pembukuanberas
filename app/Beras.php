@@ -12,7 +12,7 @@ class Beras extends Model
       'user_id',
       'tanggal_masuk_beras',
       'jumlah_beras',
-      'gabah_id',
+      'penggilingan_id',
       'jumlah_kampil'
     ];
 
@@ -20,8 +20,8 @@ class Beras extends Model
       return $this->belongsTo('App\User');
     }
 
-    public function Gabah(){
-      return $this->belongsTo('App\Gabah');
+    public function Penggilingan(){
+      return $this->belongsTo('App\Penggilingan');
     }
 
 }

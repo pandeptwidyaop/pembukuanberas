@@ -24,7 +24,7 @@ class BerasRequest extends FormRequest
     public function rules()
     {
         return [
-          'gabah_id' => 'required',
+          'penggilingan_id' => 'required',
           'tanggal_masuk_beras' => 'required|date',
           'jumlah_beras' => 'required|regex:/^\d*(\.\d{2})?$/',
           'jumlah_kampil' => 'required'

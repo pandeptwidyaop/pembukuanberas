@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Gabah;
 use App\Giling;
+use DB;
+use App\Penggilingan;
 use Auth;
 use Session;
 
@@ -39,19 +41,16 @@ class GilingController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->except('_token');
-        $data['tanggal_giling'] = date('Y-m-d',strtotime($data['tanggal_giling']));
-        $data['user_id'] = Auth::user()->id;
-        $gl = new Giling;
-        $gl->fill($data);
-        if ($gl->save()) {
-          Session::flash('alert','Berhasil menambah data penggilingan gabah '.$data['gabah_id']);
-          Session::flash('alert-class','alert-success');
-        }else {
-          Session::flash('alert','Gagal menambah data penggilingan gabah '.$data['gabah_id']);
-          Session::flash('alert-class','alert-danger');
-        }
-        return redirect('gudang/gabah');;
+        DB::transaction(function() use ($request) {
+          $gabah_id = json_encode($request->gabah);
+          foreach ($request->gabah as $gabah) {
+            $giling = Giling::create(['tanggal_giling' => date('Y-m-d',strtotime($request->tanggal_giling)),'user_id' => Auth::id(),'gabah_id' => $gabah]);
+          }
+          $penggilingan = Penggilingan::create(['user_id' => Auth::id(),'tanggal_giling' => date('Y-m-d',strtotime($request->tanggal_giling)),'gabah_id' => $gabah_id]);
+        });
+        Session::flash('alert','Berhasil menambah data penggilingan gabah.');
+        Session::flash('alert-class','alert-success');
+        return redirect('gudang/gabah');
     }
 
     /**

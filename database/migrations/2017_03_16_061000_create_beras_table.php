@@ -15,14 +15,14 @@ class CreateBerasTable extends Migration
     {
         Schema::create('beras', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('gabah_id',8);
+            $table->integer('penggilingan_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_masuk_beras');
             $table->double('jumlah_beras',10,2);
             $table->timestamps();
         });
         Schema::table('beras', function(Blueprint $table){
-          $table->foreign('gabah_id')->references('id')->on('gabahs')->onDelete('cascade')->onUpdate('cascade');
+          $table->foreign('penggilingan_id')->references('id')->on('penggilingans')->onDelete('cascade')->onUpdate('cascade');
           $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

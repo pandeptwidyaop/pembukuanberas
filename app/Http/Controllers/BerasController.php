@@ -7,8 +7,10 @@ use App\Http\Requests\BerasRequest;
 use App\Beras;
 use App\Gabah;
 use App\Gudang;
+use App\Penggilingan;
 use Auth;
 use Session;
+use DB;
 
 class BerasController extends Controller
 {
@@ -30,7 +32,7 @@ class BerasController extends Controller
      */
     public function create()
     {
-        $data = Gabah::all();
+        $data = Penggilingan::all();
         return view('beras.tambah',compact('data'));
     }
 
@@ -42,27 +44,39 @@ class BerasController extends Controller
      */
     public function store(BerasRequest $request)
     {
-        $data = $request->except('_token');
-        $data['user_id'] = Auth::user()->id;
-        $data['tanggal_masuk_beras'] = date('Y-m-d',strtotime($data['tanggal_masuk_beras']));
-        $jml_gabah = Gabah::where('id',$data['gabah_id'])->first()->jumlah_gabah;
-        $stok = Gudang::where('tipe_barang_gudang','beras')->first()->stok_barang_gudang;
-        $tipe = Gabah::where('id',$data['gabah_id'])->first()->tipe_gabah;
-        $stok_gabah = Gudang::where('tipe_barang_gudang',$tipe)->first()->stok_barang_gudang;
-        $b = new Beras;
-        $b->fill($data);
-        if ($b->save()) {
-          $stok += $data['jumlah_beras'];
-          $stok_gabah -= $jml_gabah;
-          Gudang::where('tipe_barang_gudang','beras')->update(['stok_barang_gudang' => $stok]);
-          Gudang::where('tipe_barang_gudang',$tipe)->update(['stok_barang_gudang' => $stok_gabah]);
-          Session::flash('alert','Berhasil mendambah data beras dari gabah '.$data['gabah_id']);
-          Session::flash('alert-class','alert-success');
-        }else {
-          Session::flash('alert','Gagal mendambah data beras dari gabah '.$data['gabah_id']);
-          Session::flash('alert-class','alert-danger');
-        }
+        DB::transaction(function() use ($request){
+          $kering = Gudang::where('tipe_barang_gudang','=','gabah_kering')->firstOrFail();
+          $basah = Gudang::where('tipe_barang_gudang','=','gabah_basah')->firstOrFail();
+          $gudang = Gudang::where('tipe_barang_gudang','=','beras')->firstOrFail();
 
+          $stok_kering = $kering->stok_barang_gudang;
+          $stok_basah = $basah->stok_barang_gudang;
+
+          $penggilingan = Penggilingan::findOrFail($request->penggilingan_id);
+          foreach (json_decode($penggilingan->gabah_id) as $key => $value) {
+            $gabah = Gabah::findOrFail($value);
+            if ($gabah->tipe_gabah == 'gabah_kering') {
+              $stok_kering -= $gabah->jumlah_gabah;
+            }else {
+              $stok_basah -= $gabah->jumlah_gabah;
+            }
+          }
+
+          $beras = Beras::create([
+            'penggilingan_id' => $request->penggilingan_id,
+            'user_id' => Auth::id(),
+            'tanggal_masuk_beras' => date('Y-m-d',strtotime($request->tanggal_masuk_beras)),
+            'jumlah_beras' => $request->jumlah_beras,
+            'jumlah_kampil' => $request->jumlah_kampil
+          ]);
+
+          $kering->update(['stok_barang_gudang' => $stok_kering]);
+          $basah->update(['stok_barang_gudang' => $stok_basah]);
+          $gudang->update(['stok_barang_gudang' => $request->jumlah_beras]);
+
+          Session::flash('alert','Berhasil mendambah data beras dari penggilingan gabah');
+          Session::flash('alert-class','alert-success');
+        });
         return redirect(url('gudang/beras'));
     }
 
@@ -98,28 +112,27 @@ class BerasController extends Controller
      */
     public function update(BerasRequest $request, $id)
     {
-        $data = $request->except('_token','_method');
-        $data['user_id'] = Auth::user()->id;
-        $data['tanggal_masuk_beras'] = date('Y-m-d',strtotime($data['tanggal_masuk_beras']));
-        $beras = Beras::where('id',$id)->get();
-        $stok = Gudang::where('tipe_barang_gudang','beras')->first()->stok_barang_gudang;
-        $jml_bf = $beras[0]->jumlah_beras;
-        $jml_af = $data['jumlah_beras'];
-        if ($jml_bf < $jml_af) {
-          //penambahan
-          $stok += $jml_af - $jml_bf ;
-        }elseif ($jml_bf > $jml_af) {
-          //pengurangan
-          $stok -= $jml_bf - $jml_af;
-        }
-        if (Beras::where('id',$id)->update($data)) {
-          Gudang::where('tipe_barang_gudang','beras')->update(['stok_barang_gudang' => $stok]);
-          Session::flash('alert','Berhasil merubah data beras kode gabah: '.$data['gabah_id']);
-          Session::flash('alert-class','alert-success');
-        }else {
-          Session::flash('alert','Gagal merubah data beras kode gabah: '.$data['gabah_id']);
-          Session::flash('alert-class','alert-danger');
-        }
+        DB::transaction(function() use ($request,$id){
+          $data = $request->except('_token','_method');
+          $data['user_id'] = Auth::user()->id;
+          $data['tanggal_masuk_beras'] = date('Y-m-d',strtotime($data['tanggal_masuk_beras']));
+          $beras = Beras::findOrFail($id);
+          $stok = Gudang::where('tipe_barang_gudang','beras')->first()->stok_barang_gudang;
+          $jml_bf = $beras->jumlah_beras;
+          $jml_af = $data['jumlah_beras'];
+          if ($jml_bf < $jml_af) {
+            //penambahan
+            $stok += $jml_af - $jml_bf ;
+          }elseif ($jml_bf > $jml_af) {
+            //pengurangan
+            $stok -= $jml_bf - $jml_af;
+          }
+          if (Beras::where('id',$id)->update($data)) {
+            Gudang::where('tipe_barang_gudang','beras')->update(['stok_barang_gudang' => $stok]);
+            Session::flash('alert','Berhasil merubah data beras. ');
+            Session::flash('alert-class','alert-success');
+          }
+        });
 
         return redirect('gudang/beras');
     }
@@ -132,20 +145,33 @@ class BerasController extends Controller
      */
     public function destroy($id)
     {
-        $stok = Gudang::where('tipe_barang_gudang','beras')->first()->stok_barang_gudang;
-        $stok -= Beras::where('id',$id)->first()->jumlah_beras;
-        $tipe = Gabah::where('id',Beras::where('id',$id)->first()->gabah_id)->first()->tipe_gabah;
-        $stok_gabah = Gudang::where('tipe_barang_gudang',$tipe)->first()->stok_barang_gudang;
-        $stok_gabah += Gabah::where('id',Beras::where('id',$id)->first()->gabah_id)->first()->jumlah_gabah;
-        if (Beras::find($id)->delete()) {
-          Gudang::where('tipe_barang_gudang','beras')->update(['stok_barang_gudang' => $stok]);
-          Gudang::where('tipe_barang_gudang',$tipe)->update(['stok_barang_gudang' => $stok_gabah]);
+        DB::transaction(function() use ($id){
+          $currentBeras = Beras::findOrFail($id);
+          $penggilingan = Penggilingan::findOrFail($currentBeras->penggilingan_id);
+          $gabahKering = Gudang::where('tipe_barang_gudang','=','gabah_kering')->firstOrFail();
+          $gabahBasah = Gudang::where('tipe_barang_gudang','=','gabah_basah')->firstOrFail();
+          $beras = Gudang::where('tipe_barang_gudang','=','beras')->firstOrFail();
+
+          $stokGabahKering = $gabahKering->stok_barang_gudang;
+          $stokGabahBasah = $gabahBasah->stok_barang_gudang;
+
+          foreach (json_decode($penggilingan->gabah_id) as $key => $value) {
+            $gabah = Gabah::findOrFail($value);
+            if ($gabah->tipe_gabah == 'gabah_kering') {
+              $stokGabahKering += $gabah->jumlah_gabah;
+            }else {
+              $stokGabahBasah += $gabah->jumlah_gabah;
+            }
+          }
+
+          $currentBeras->delete();
+          $gabahKering->update(['stok_barang_gudang' => $stokGabahKering]);
+          $gabahBasah->update(['stok_barang_gudang' => $stokGabahBasah]);
+          $beras->update(['stok_barang_gudang' => ($beras->stok_barang_gudang - $currentBeras->jumlah_beras)]);
+
           Session::flash('alert','Berhasil menghapus data beras');
           Session::flash('alert-class','alert-success');
-        }else {
-          Session::flash('alert','Gagal menghapus data beras');
-          Session::flash('alert-class','alert-danger');
-        }
+        });
         return redirect('gudang/beras');;
     }
 }

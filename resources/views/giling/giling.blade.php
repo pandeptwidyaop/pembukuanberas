@@ -33,27 +33,7 @@
                       <form class="form-horizontal" action="{{url('gudang/giling/')}}" method="post">
                           {{csrf_field()}}
                             <div class="row clearfix">
-                                <div class="row clearfix">
-                                    <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                        <label for="email_address_2">Gabah</label>
-                                    </div>
-                                    <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                      <div class="form-group">
-                                          <div class="form-line">
-                                            <select class="form-control show-tick" data-live-search="true" name="gabah_id" required="">
-                                                <option value="">Pilih Gabah</option>
-                                              @foreach ($data as $r)
-                                                @if ($r->tipe_gabah == 'gabah_kering' && count($r->Giling) == 0)
-                                                  <option value="{{$r->id}}">{{$r->id.' - '.date('d F Y',strtotime($r->tanggal_masuk_gabah))}}</option>
-                                                @elseif ($r->tipe_gabah == 'gabah_basah' && count($r->Jemurgabah) == 1 && count($r->Giling) == 0)
-                                                  <option value="{{$r->id}}">{{$r->id.' - '.date('d F Y',strtotime($r->tanggal_masuk_gabah))}}</option>
-                                                @endif
-                                              @endforeach
-                                            </select>
-                                          </div>
-                                      </div>
-                                    </div>
-                                </div>
+
                                 <div class="row clearfix">
                                     <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                                         <label for="jemur">Tanggal Giling</label>
@@ -66,11 +46,56 @@
                                       </div>
                                     </div>
                                 </div>
+                                <div class="body table-responsive">
+                                  <label>Pilih Gabah</label>
+                                  <small>Centang untuk memilih</small>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Pilih</th>
+                                                <th>Kode Gabah</th>
+                                                <th>Tanggal Masuk</th>
+                                                <th>Jumlah Kilogram Gabah</th>
+                                                <th>Jumlah Kampil</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                          @php
+                                            $ck = 0;
+                                          @endphp
+                                          @foreach ($data as $r)
+                                            @if ($r->tipe_gabah == 'gabah_kering' && count($r->Giling) == 0)
+                                              <tr>
+                                                <td>
+                                                  <input type="checkbox" id="ck{{$ck}}" class="filled-in" name="gabah[]" value="{{$r->id}}" />
+                                                  <label for="ck{{$ck}}">Pilih</label></td>
+                                                <td>{{$r->id}}</td>
+                                                <td>{{date('d F Y',strtotime($r->tanggal_masuk_gabah))}}</td>
+                                                <td>{{number_format($r->jumlah_gabah,2,',','.')}} kg</td>
+                                                <td>{{$r->jumlah_kampil}} kampil</td>
+                                              </tr>
+                                            @elseif ($r->tipe_gabah == 'gabah_basah' && count($r->Jemurgabah) == 1 && count($r->Giling) == 0)
+                                              <tr>
+                                                <td>
+                                                  <input type="checkbox" id="ck{{$ck}}" class="filled-in" name="gabah[]" value="{{$r->id}}" />
+                                                  <label for="ck{{$ck}}">Pilih</label></td>
+                                                <td>{{$r->id}}</td>
+                                                <td>{{date('d F Y',strtotime($r->tanggal_masuk_gabah))}}</td>
+                                                <td>{{number_format($r->jumlah_gabah,2,',','.')}} kg</td>
+                                                <td>{{$r->jumlah_kampil}} kampil</td>
+                                              </tr>
+                                            @endif
+                                            @php
+                                              $ck++;
+                                            @endphp
+                                          @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-
                             <div class="row clearfix">
                                 <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">Tambah</button>
+                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect pull-right">Tambah</button>
                                 </div>
                             </div>
                         </form>

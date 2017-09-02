@@ -62,11 +62,15 @@
                                       <ul class="dropdown-menu">
                                           <li><a href="{{url('gudang/beras/'.$r->id.'/edit')}}" class=" waves-effect waves-block">Edit</a></li>
                                           <li role="separator" class="divider"></li>
-                                          <li><a href="javascript:void(0);" class=" waves-effect waves-block" onclick="hapusBeras({{$r->id}})">Hapus</a></li>
+                                          <li><a href="javascript:void(0);" class=" waves-effect waves-block" onclick="hapusBeras('{{$r->id}}');">Hapus</a></li>
                                       </ul>
                                   </div>
                                 </td>
-                                <td><a href="{{url('gudang/gabah/'.$r->Gabah->id)}}">{{$r->Gabah->id}}</a></td>
+                                <td>
+                                  @foreach (json_decode($r->Penggilingan->gabah_id) as $key => $value)
+                                    <p><a href="{{url('gudang/gabah/'.$value)}}">{{$value}}</a></p>
+                                  @endforeach
+                                </td>
                                 <td>{{date('d F Y',strtotime($r->tanggal_masuk_beras))}}</td>
                                 <td>{{number_format($r->jumlah_beras,2,',','.')}} Kg - {{$r->jumlah_kampil}} kampil</td>
                                 <td>{{$r->User->name}}</td>

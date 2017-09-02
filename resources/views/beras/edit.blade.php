@@ -37,13 +37,13 @@
                         {{csrf_field()}}
                         <div class="row clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="email_address_2">Gabah</label>
+                                <label for="email_address_2">Gabah Giling</label>
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                               <div class="form-group">
                                   <div class="form-line">
-                                    <select class="form-control show-tick" data-live-search="true" name="gabah_id" required="">
-                                      <option value="{{$r->Gabah->id}}" selected="">{{$r->Gabah->id.' - '.date(' d F Y',strtotime($r->Gabah->tanggal_masuk_gabah)).' - '}}{{($r->tipe_gabah == 'gabah_kering') ? 'Gabah Kering' : 'Gabah Basah'}} </option>
+                                    <select class="form-control show-tick" data-live-search="true" name="penggilingan_id" required="">
+                                      <option value="{{$r->Penggilingan->id}}" selected="">{{$r->Penggilingan->id.' - '.date(' d F Y',strtotime($r->Penggilingan->tanggal_giling)).' - '}} Gabah ID : {{$r->Penggilingan->gabah_id}} </option>
                                     </select>
                                   </div>
                               </div>
