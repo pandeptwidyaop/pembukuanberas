@@ -12,4 +12,6 @@ class Penggilingan extends Model
     {
       return $this->hasOne('App\Beras');
     }
+
+
 }

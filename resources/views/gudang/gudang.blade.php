@@ -34,7 +34,7 @@
                       </ul>
                   </div>
                   <div class="body">
-                    <h2>Stok {{number_format($r->stok_barang_gudang,2,",",".")}} {{($r->tipe_barang_gudang == 'sekam') ? ' truk' : 'kg'}}</h2>
+                    <h2>Stok {{number_format($r->stok_barang_gudang,2,",",".")}} {{($r->tipe_barang_gudang == 'sekam') ? ' ' : 'kg'}}</h2>
                   </div>
               </div>
           </div>

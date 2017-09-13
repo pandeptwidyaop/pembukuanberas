@@ -39,16 +39,40 @@
                             </div>
                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                               <div class="form-group">
-                                  <div class="form-line">
-                                    <select class="form-control show-tick" data-live-search="true" name="gabah_id" id="gabahVal" required="" onchange="countSekam()">
-                                        <option value="">Pilih Gabah</option>
-                                        @foreach ($data as $r)
-                                          @if (count($r->Giling) == 1 && count($r->Sekam) == 0)
-                                            <option value="{{$r->id}}">{{$r->id.' - '.date('d F Y',strtotime($r->tanggal_masuk_gabah)).' - '.number_format($r->jumlah_gabah,2,',','.')}} Kg Gabah - {{number_format($r->Beras->jumlah_beras,2,',','.')}} Kg Beras</option>
-                                          @endif
-                                        @endforeach
-                                    </select>
-                                  </div>
+                                <table class="table table-bordered">
+                                  <thead>
+                                    <tr>
+                                      <td>Pilih</td>
+                                      <td>Tanggal Giling</td>
+                                      <td>Kode Gabah</td>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    @php
+                                      $ck=0;
+                                    @endphp
+                                    @foreach ($penggilingans as $penggilingan)
+                                      <tr>
+                                        <td>
+                                          <input type="checkbox" id="ck{{$ck}}" class="filled-in" name="penggilingan_id[]" value="{{$penggilingan->id}}">
+                                          <label for="ck{{$ck}}">Pilih</label>
+                                        </td>
+                                        <td>{{date('d F Y',strtotime($penggilingan->tanggal_giling))}}</td>
+                                        <td>
+                                          @foreach (json_decode($penggilingan->gabah_id) as $gabah)
+                                            <a href="{{url('gudang/gabah/'.$gabah)}}">{{$gabah}}</a><br>
+                                          @endforeach
+                                        </td>
+                                      </tr>
+                                      @php
+                                        $ck++;
+                                      @endphp
+                                    @endforeach
+                                    @if (count($penggilingans) == 0)
+                                      <td colspan="3">Tidak ada data</td>
+                                    @endif
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
                         </div>
@@ -71,7 +95,7 @@
                               <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                          <input type="text" id="jmlSekam" class="form-control" placeholder="Jumlah sekam per 10 ton beras" name="jumlah_sekam" required="">
+                                          <input type="text" id="jmlSekam" class="form-control" placeholder="Jumlah sekam" name="jumlah_sekam" required="">
                                       </div>
                                       <small id="keterangan"></small>
                                   </div>

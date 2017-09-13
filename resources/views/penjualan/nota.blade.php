@@ -35,7 +35,7 @@
                     <i class="material-icons">print</i>
                 </button>
                 <hr>
-                <div id="printArea" style="font-size:10px">
+                <div id="printArea" style="font-size:0.8em">
                   @foreach ($data as $r)
                     <div class="row">
                       <div class="col-md-4 text-center">
@@ -44,14 +44,14 @@
                         <p>Telepon {{$config->telephone()}}</p>
                         <p><h6>NO NOTA : {{$r->id}}</h6></p>
                       </div>
-                      <div class="col-md-2 text-right">
+                      <div class="col-md-2 pull-right" style="font-size:0.6em">
                         <p>Badung {{date('d-m-Y',strtotime($r->tanggal_penjualan))}}</p>
                         <p>Nama : {{$r->pembeli_penjualan}}</p>
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row" >
                       <div class="col-md-6">
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="font-size:0.8em ; padding:10px">
                           <thead>
                             <th>BANYAKNYA</th>
                             <th>NAMA BARANG</th>
@@ -79,7 +79,7 @@
                             @endforeach
                           </tbody>
                         </table>
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="font-size:0.8em">
                           <tr>
                             <td><b>NO. NOTA</b></td>
                             <td>{{$r->id}}</td>
@@ -94,7 +94,7 @@
                           </tr>
                         </table>
                         <span><b>NB.</b> Barang yang sudah dibeli tidak dapat dikembalikan kecuali ada perjanjian.</span>
-                        <table class="table">
+                        <table class="table" style="font-size:0.8em">
                           <thead>
                             <tr >
                               <th class="text-center">Tanda Terima</th>
@@ -103,8 +103,8 @@
                           </thead>
                           <tbody>
                             <tr class="text-center">
-                              <td><div style="padding-top: 70px;">(_______________)</div></td>
-                              <td ><div style="padding-top: 70px;">( {{Auth::user()->name}})</div></td>
+                              <td><div style="padding-top: 30px;">(_______________)</div></td>
+                              <td ><div style="padding-top: 30px;">( {{Auth::user()->name}})</div></td>
                             </tr>
                           </tbody>
                         </table>

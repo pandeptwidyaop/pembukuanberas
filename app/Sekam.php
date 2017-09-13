@@ -3,11 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Penggilingan;
 
 class Sekam extends Model
 {
     protected $fillable = [
-      'gabah_id',
+      'penggilingan_id',
       'user_id',
       'tanggal_masuk_sekam',
       'jumlah_sekam',
@@ -20,5 +21,10 @@ class Sekam extends Model
 
     public function User(){
       return $this->belongsTo('App\User');
+    }
+
+    public static function getGabah($penggilingan_id)
+    {
+      return json_decode(Penggilingan::find($penggilingan_id)->gabah_id);
     }
 }

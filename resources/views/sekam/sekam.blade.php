@@ -38,7 +38,6 @@
                                 <td width="3%"></td>
                                 <td>Tanggal</td>
                                 <td>Kode Gabah</td>
-                                <td>Jumlah Beras</td>
                                 <td>Jumlah Sekam</td>
                                 <td>User</td>
                               </tr>
@@ -48,7 +47,6 @@
                                 <td></td>
                                 <td>Tanggal</td>
                                 <td>Kode Gabah</td>
-                                <td>Jumlah Beras</td>
                                 <td>Jumlah Sekam</td>
                                 <td>User</td>
                               </tr>
@@ -69,9 +67,14 @@
                                   </div>
                                 </td>
                                 <td>{{date('d F Y',strtotime($r->tanggal_masuk_sekam))}}</td>
-                                <td><a href="{{url('gudang/gabah/'.$r->Gabah->id)}}">{{$r->Gabah->id}}</a></td>
-                                <td>{{number_format($r->Gabah->Beras->jumlah_beras,2,',','.')}} Kg</td>
-                                <td>{{$r->jumlah_kampil}} kampil - {{number_format($r->jumlah_sekam,4,',','.')}} truk</td>
+                                <td>
+                                  @foreach (json_decode($r->penggilingan_id) as $penggilingan)
+                                    @foreach (\App\Sekam::getGabah($penggilingan) as $gabah)
+                                      <a href="{{url('gudang/gabah/'.$gabah)}}">{{$gabah}}</a><br>
+                                    @endforeach
+                                  @endforeach
+                                </td>
+                                <td>{{$r->jumlah_kampil}} kampil - {{number_format($r->jumlah_sekam,0,',','.')}} </td>
                                 <td>{{$r->User->name}}</td>
                               </tr>
                             @endforeach

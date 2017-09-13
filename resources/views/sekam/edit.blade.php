@@ -26,73 +26,57 @@
                     @if (count($errors) > 0)
                       <div class="alert alert-danger alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                          @foreach ($errors->all() as $r)
-                            <li>{{$r}}</li>
+                          @foreach ($errors->all() as $sekam)
+                            <li>{{$sekam}}</li>
                           @endforeach
                       </div>
                     @endif
-                      @foreach ($data as $r)
-                        <form class="form-horizontal" action="{{url('gudang/sekam/'.$r->id)}}" method="post">
-                          <input type="hidden" name="_method" value="PUT">
-                          {{csrf_field()}}
-                          <div class="row clearfix">
-                              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                  <label for="email_address_2">Gabah</label>
+                    <form class="form-horizontal" action="{{url('gudang/sekam/'.$sekam->id)}}" method="post">
+                      <input type="hidden" name="_method" value="PUT">
+                      {{csrf_field()}}
+                        <div class="row clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="email_address_2">Tanggal</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                              <div class="form-group">
+                                  <div class="form-line">
+                                      <input type="text" class="datepicker form-control" placeholder="Pilih tanggal" name="tanggal_masuk_sekam" required="" value="{{date('d F Y',strtotime($sekam->tanggal_masuk_sekam))}}">
+                                  </div>
                               </div>
-                              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                            </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="jmlSekam">Jumlah</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                 <div class="form-group">
                                     <div class="form-line">
-                                      <select class="form-control show-tick" data-live-search="true" name="gabah_id" id="gabahVal" required="" onchange="countSekam()">
-                                        <option value="{{$r->Gabah->id}}" selected="">{{$r->Gabah->id.' - '.date('d F Y',strtotime($r->Gabah->tanggal_masuk_gabah)).' - '.number_format($r->Gabah->jumlah_gabah,2,',','.')}} Kg Gabah - {{number_format($r->Gabah->Beras->jumlah_beras,2,',','.')}} Kg Beras</option>
-                                      </select>
+                                        <input type="text" id="jmlSekam" class="form-control" placeholder="Jumlah sekam per 10 ton beras" name="jumlah_sekam" required="" value="{{$sekam->jumlah_sekam}}">
                                     </div>
-                                </div>
-                              </div>
-                          </div>
-                            <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                    <label for="email_address_2">Tanggal</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                          <input type="text" class="datepicker form-control" placeholder="Pilih tanggal" name="tanggal_masuk_sekam" required="" value="{{date('d F Y',strtotime($r->tanggal_masuk_sekam))}}">
-                                      </div>
-                                  </div>
+                                    <small id="keterangan"></small>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                    <label for="jmlSekam">Jumlah</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="text" id="jmlSekam" class="form-control" placeholder="Jumlah sekam per 10 ton beras" name="jumlah_sekam" required="" value="{{$r->jumlah_sekam}}">
-                                        </div>
-                                        <small id="keterangan"></small>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                <label for="jml">Jumlah Kampil</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                <div class="form-group">
+                                    <div class="form-line">
+                                        <input type="number" id="jml" class="form-control" placeholder="Kampil" name="jumlah_kampil" required="" value="{{$sekam->jumlah_kampil}}">
                                     </div>
                                 </div>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                    <label for="jml">Jumlah Kampil</label>
-                                </div>
-                                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                    <div class="form-group">
-                                        <div class="form-line">
-                                            <input type="number" id="jml" class="form-control" placeholder="Kampil" name="jumlah_kampil" required="" value="{{$r->jumlah_kampil}}">
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
+                                <button type="submit" class="btn btn-primary m-t-15 waves-effect">Simpan</button>
                             </div>
-                            <div class="row clearfix">
-                                <div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-4 col-xs-offset-5">
-                                    <button type="submit" class="btn btn-primary m-t-15 waves-effect">Simpan</button>
-                                </div>
-                            </div>
-                        </form>
-                      @endforeach
+                        </div>
+                    </form>
                   </div>
               </div>
           </div>
