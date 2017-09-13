@@ -35,20 +35,6 @@
                       <form class="form-horizontal" action="{{url('gudang/dedak/'.$r->id)}}" method="post">
                         <input type="hidden" name="_method" value="PUT">
                         {{csrf_field()}}
-                        <div class="row clearfix">
-                            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                <label for="email_address_2">Gabah</label>
-                            </div>
-                            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                              <div class="form-group">
-                                  <div class="form-line">
-                                    <select class="form-control show-tick" data-live-search="true" name="gabah_id" required="">
-                                      <option value="{{$r->Gabah->id}}">{{$r->Gabah->id.' - '.date('d F Y',strtotime($r->Gabah->tanggal_masuk_gabah)).' - '.number_format($r->Gabah->jumlah_gabah,2,',','.')}} Kg Gabah</option>
-                                    </select>
-                                  </div>
-                              </div>
-                            </div>
-                        </div>
                           <div class="row clearfix">
                               <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                                   <label for="email_address_2">Tanggal</label>
@@ -68,7 +54,7 @@
                               <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                          <input type="text"  class="form-control" placeholder="Jumlah dedak" name="jumlah_dedak" required="" value="{{number_format($r->jumlah_dedak,2,',','.')}}">
+                                          <input type="text"  class="form-control" placeholder="Jumlah dedak" name="jumlah_dedak" required="" value="{{number_format($r->jumlah_dedak,2,'.','.')}}">
                                       </div>
 
                                   </div>

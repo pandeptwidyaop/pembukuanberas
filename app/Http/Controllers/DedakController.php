@@ -8,6 +8,8 @@ use App\Gabah;
 use App\Gudang;
 use Auth;
 use Session;
+use App\Penggilingan;
+use DB;
 
 class DedakController extends Controller
 {
@@ -29,8 +31,8 @@ class DedakController extends Controller
      */
     public function create()
     {
-        $data = Gabah::all();
-        return view('dedak.tambah',compact('data'));
+        $penggilingans = $this->getPenggilinganNotUse();
+        return view('dedak.tambah',compact('penggilingans'));
     }
 
     /**
@@ -41,6 +43,7 @@ class DedakController extends Controller
      */
     public function store(Request $request)
     {
+      DB::transaction(function() use($request){
         $data = $request->except('_token');
         $data['user_id'] = Auth::user()->id;
         $data['tanggal_masuk_dedak'] = date('Y-m-d',strtotime($data['tanggal_masuk_dedak']));
@@ -50,12 +53,13 @@ class DedakController extends Controller
         $stok += $data['jumlah_dedak'];
         if ($dedak->save()) {
           Gudang::where('tipe_barang_gudang','dedak')->update(['stok_barang_gudang' => $stok]);
-          Session::flash('alert','Berhasil menambahkan data dedak dari gabah : '.$data['gabah_id']);
+          Session::flash('alert','Berhasil menambahkan data dedak');
           Session::flash('alert-class','alert-success');
         }else {
-          Session::flash('alert','Gagal menambahkan data dedak dari gabah : '.$data['gabah_id']);
+          Session::flash('alert','Gagal menambahkan data dedak');
           Session::flash('alert-class','alert-danger');
         }
+      });
 
         return redirect('gudang/dedak');;
     }
@@ -135,5 +139,15 @@ class DedakController extends Controller
         Session::flash('alert-class','alert-danger');
       }
       return redirect('gudang/dedak');;
+    }
+
+    protected function getPenggilinganNotUse()
+    {
+      $dedaks = Dedak::all();
+      $penggilingans = [];
+      foreach ($dedaks as $dedak) {
+        $penggilingans[] = $dedak->penggilingan_id;
+      }
+      return Penggilingan::whereNotIn('id',$penggilingans)->get();
     }
 }

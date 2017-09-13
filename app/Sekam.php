@@ -15,10 +15,6 @@ class Sekam extends Model
       'jumlah_kampil'
     ];
 
-    public function Gabah(){
-      return $this->belongsTo('App\Gabah');
-    }
-
     public function User(){
       return $this->belongsTo('App\User');
     }

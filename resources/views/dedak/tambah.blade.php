@@ -40,12 +40,10 @@
                             <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                               <div class="form-group">
                                   <div class="form-line">
-                                    <select class="form-control show-tick" data-live-search="true" name="gabah_id" required="">
-                                        <option value="">Pilih Gabah</option>
-                                        @foreach ($data as $r)
-                                          @if (count($r->Giling) == 1 && count($r->Dedak) == 0)
-                                            <option value="{{$r->id}}">{{$r->id.' - '.date('d F Y',strtotime($r->tanggal_masuk_gabah)).' - '.number_format($r->jumlah_gabah,2,',','.')}} Kg Gabah</option>
-                                          @endif
+                                    <select class="form-control show-tick" data-live-search="true" name="penggilingan_id" required="">
+                                        <option value="">Pilih Gabah Yang Digiling</option>
+                                        @foreach ($penggilingans as $r)
+                                          <option value="{{$r->id}}">{{date('d F Y',strtotime($r->tanggal_giling)).' - '.$r->gabah_id}}</option>
                                         @endforeach
                                     </select>
                                   </div>

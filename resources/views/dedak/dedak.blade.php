@@ -67,7 +67,11 @@
                                           <li><a href="javascript:void(0);" class=" waves-effect waves-block" onclick="hapusDedak({{$r->id}})">Hapus</a></li>
                                       </ul>
                                   </div></th>
-                                  <th><a href="{{url('gudang/gabah/'.$r->Gabah->id)}}">{{$r->Gabah->id}}</a></th>
+                                  <th>
+                                    @foreach (json_decode($r->Penggilingan->gabah_id) as $gabah)
+                                      <a href="{{url('gudang/gabah/'.$gabah)}}">{{$gabah}}</a><br>
+                                    @endforeach
+                                  </th>
                                   <th>{{date('d F Y',strtotime($r->tanggal_masuk_dedak))}}</th>
                                   <th>{{number_format($r->jumlah_dedak,2,',','.')}} Kg - {{$r->jumlah_kampil}} kampil</th>
                                   <th>{{$r->User->name}}</th>
