@@ -20,8 +20,7 @@
                                   <i class="material-icons">more_vert</i>
                               </a>
                               <ul class="dropdown-menu pull-right">
-                                  <li><a href="{{url('kepegawaian/absen/create')}}">Tambah Absen</a></li>
-
+                                  <li><a href="javascript:void(0)" onclick="addAbsent()">Tambah Absen</a></li>
                               </ul>
                           </li>
                       </ul>
@@ -90,6 +89,37 @@
           </div>
       </div>
     </div>
+    <div class="modal fade" id="modalAbsent" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+        <form class="" action="{{url('kepegawaian/absen')}}" method="post">
+          {{ csrf_field() }}
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="">Tambah Absen</h4>
+            </div>
+            <div class="modal-body">
+              <div class="row clearfix">
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                      <label for="email_address_2">Tanggal</label>
+                  </div>
+                  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                    <div class="form-group">
+                        <div class="form-line">
+                            <input type="text" class="datepicker form-control" placeholder="Pilih tanggal" name="tanggal" required="">
+                        </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Keluar</button>
+              <input type="submit" value="Buat" class="btn btn-primary">
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
     <form class="hidden" method="post" id="formHapus">
       <input type="hidden" name="_method" value="DELETE">
       {{csrf_field()}}
@@ -119,6 +149,10 @@
               }
           }
       });
+    }
+
+    function addAbsent() {
+      $('#modalAbsent').modal('show');
     }
   </script>
 @endsection

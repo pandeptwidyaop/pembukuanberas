@@ -66,7 +66,32 @@ class AbsenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $date  = date('Y-m-d',strtotime($request->tanggal));
+      $absen  = Absen::where('tanggal','=',$date)->first();
+      if ($absen == null) {
+        $data = [
+          'user_id' => Auth::user()->id,
+          'tanggal' => $date
+        ];
+        $absen = new Absen;
+        $absen->fill($data);
+        $absen->save();
+        $pegawai = Pegawai::all();
+        foreach ($pegawai as $r) {
+          $absensi = [
+            'absen_id' => $absen->id,
+            'pegawai_id' => $r->id
+          ];
+          $k = new Kehadiran;
+          $k->fill($absensi);
+          $k->save();
+        }
+        return redirect('kepegawaian/absen/absensi/'.$absen->id);
+      }else {
+        Session::flash('alert','Tidak bisa melakukan absensi di tanggal yang sama.');
+        Session::flash('alert-class','alert-danger');
+        return redirect('kepegawaian/absen');;
+      }
     }
 
     /**
