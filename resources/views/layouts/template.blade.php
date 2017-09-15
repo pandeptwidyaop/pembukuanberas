@@ -181,9 +181,9 @@
                             <span>Laporan</span>
                         </a>
                         <ul class="ml-menu">
-                            <li id="harian">
+                            {{-- <li id="harian">
                                 <a href="{{url('laporan/harian#print')}}">Print Laporan Hari Ini</a>
-                            </li>
+                            </li> --}}
                             <li id="mydata">
                                 <a href="{{url('laporan/data')}}">Data Laporan</a>
                             </li>
