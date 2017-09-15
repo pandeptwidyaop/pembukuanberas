@@ -115,7 +115,7 @@ class PenjualanController extends Controller
         $penjualan = Penjualan::where('id',$id)->get();
         foreach ($penjualan as $r) {
           foreach ($r->Penjualanitem as $p) {
-            $stok = Gudang::where('id',$p->gudang_id)->first()->stok_barang_gudang;
+            $stok = Gudang::find($p->gudang_id)->stok_barang_gudang;
             $stok += $p->jumlah;
             Gudang::where('id',$p->gudang_id)->update(['stok_barang_gudang' => $stok]);
           }
