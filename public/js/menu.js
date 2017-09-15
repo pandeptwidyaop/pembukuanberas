@@ -43,6 +43,9 @@ function getActiveMenu(){
   }else if (add.search('/kepegawaian/penggajian') > 0) {
     $('#kepegawaian').addClass('active');
     $('#penggajian').addClass('active');
+  }else if (add.search('/laporan') > 0) {
+    $('#laporan').addClass('active');
+    $('#mydata').addClass('active');
   }else if (add.search('/profile') > 0) {
     $('#gudang').addClass('active');
   }else if (add.search('/users') > 0) {
@@ -50,6 +53,9 @@ function getActiveMenu(){
   }
   else if (add.search('/pengaturan') > 0) {
     $('#pengaturan').addClass('active');
+  }else if (add.search('/laporan') > 0) {
+    $('#laporan').addClass('active');
+    $('#mydata').addClass('active');
   }
 
 }

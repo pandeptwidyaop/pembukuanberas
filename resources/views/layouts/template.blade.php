@@ -184,6 +184,9 @@
                             <li id="harian">
                                 <a href="{{url('laporan/harian#print')}}">Print Laporan Hari Ini</a>
                             </li>
+                            <li id="mydata">
+                                <a href="{{url('laporan/data')}}">Data Laporan</a>
+                            </li>
                         </ul>
                     </li>
                     @if (Auth::user()->level == 1)

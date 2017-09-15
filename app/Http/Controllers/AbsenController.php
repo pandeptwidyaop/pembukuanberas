@@ -30,32 +30,7 @@ class AbsenController extends Controller
      */
     public function create()
     {
-        $date = date('Y-m-d',strtotime(Carbon::now('Asia/Jakarta')));
-        if (Absen::where('tanggal',$date)->get()->count() == 1) {
-          Session::flash('alert','Tidak bisa melakukan absensi di tanggal yang sama.');
-          Session::flash('alert-class','alert-danger');
-          return redirect('kepegawaian/absen');;
-        }else {
-          $data = [
-            'user_id' => Auth::user()->id,
-            'tanggal' => $date
-          ];
-          $absen = new Absen;
-          $absen->fill($data);
-          $absen->save();
-          $pegawai = Pegawai::all();
-          foreach ($pegawai as $r) {
-            $absensi = [
-              'absen_id' => $absen->id,
-              'pegawai_id' => $r->id
-            ];
-            $k = new Kehadiran;
-            $k->fill($absensi);
-            $k->save();
-          }
-          return redirect('kepegawaian/absen/absensi/'.$absen->id);
-        }
-
+        
     }
 
     /**

@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('generate/slipgaji/{bulan}/{tahun}','GeneratePDFController@generateSlipGaji');
     Route::resource('/profile','ProfileController');
     Route::get('/laporan/harian','LaporanController@harian');
+    Route::get('laporan/data','LaporanController@data');
+    Route::get('laporan/data/{tangal_mulai}/{tanggal_selesai}','LaporanController@getData');
     Route::group(['middleware' => 'level:1'],function(){
       Route::resource('/users','UsersmanagementController');
       Route::get('users/{id}/change','UsersmanagementController@setStatus');
