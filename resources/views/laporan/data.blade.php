@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Data Laporan</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <style media="screen">
       body {
         font-size: 0.8em;
@@ -83,11 +84,28 @@
             $count = 0;
           @endphp
         @endforeach
-        <tr>
-          <td colspan="11" ><p class="pull-right">TOTAL</p></td>
-          <td>Rp. {{number_format($global,0,',','.')}}</td>
-        </tr>
+
       </tbody>
+      <tfoot>
+        <tr>
+          <th colspan="11" ><p class="pull-right">TOTAL</p></th>
+          <th>Rp. {{number_format($global,0,',','.')}}</th>
+        </tr>
+      </tfoot>
     </table>
+    <script
+  src="http://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      $('table').dataTable({
+        "paging":   false,
+        "ordering": true,
+        "info":     false,
+        "searching" : false,
+        "order" : [[0,'asc']]
+      });
+    </script>
   </body>
 </html>
