@@ -39,18 +39,38 @@
                                         <label for="email_address_2">Gabah</label>
                                     </div>
                                     <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                      <div class="form-group">
-                                          <div class="form-line">
-                                            <select class="form-control show-tick" data-live-search="true" name="gabah_id" required="">
-                                                <option value="">Pilih Gabah</option>
-                                              @foreach ($data as $r)
-                                                @if (count($r->Jemurgabah) == 0)
-                                                  <option value="{{$r->id}}">{{$r->id.' - '.date('d F Y',strtotime($r->tanggal_masuk_gabah))}}</option>
-                                                @endif
-                                              @endforeach
-                                            </select>
-                                          </div>
-                                      </div>
+                                      <table class="table table-bordered">
+                                          <thead>
+                                              <tr>
+                                                  <th>Pilih</th>
+                                                  <th>Kode Gabah</th>
+                                                  <th>Tanggal Masuk</th>
+                                                  <th>Jumlah Kilogram Gabah</th>
+                                                  <th>Jumlah Kampil</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                            @php
+                                              $ck = 0;
+                                            @endphp
+                                            @foreach ($data as $r)
+                                              @if ($r->tipe_gabah == 'gabah_basah' && count($r->Jemurgabah) == 0 && count($r->Giling) == 0)
+                                                <tr>
+                                                  <td>
+                                                    <input type="checkbox" id="ck{{$ck}}" class="filled-in" name="gabah[]" value="{{$r->id}}" />
+                                                    <label for="ck{{$ck}}">Pilih</label></td>
+                                                  <td>{{$r->id}}</td>
+                                                  <td>{{date('d F Y',strtotime($r->tanggal_masuk_gabah))}}</td>
+                                                  <td>{{number_format($r->jumlah_gabah,2,',','.')}} kg</td>
+                                                  <td>{{$r->jumlah_kampil}} kampil</td>
+                                                </tr>
+                                              @endif
+                                              @php
+                                                $ck++;
+                                              @endphp
+                                            @endforeach
+                                          </tbody>
+                                      </table>
                                     </div>
                                 </div>
                                 <div class="row clearfix">

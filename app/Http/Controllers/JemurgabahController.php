@@ -7,6 +7,7 @@ use Auth;
 use App\Gabah;
 use App\Jemurgabah;
 use Session;
+use DB;
 
 class JemurgabahController extends Controller
 {
@@ -39,19 +40,18 @@ class JemurgabahController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->except('_token');
-        $data['user_id'] = Auth::user()->id;
-        $data['tanggal_jemurgabah'] = date('Y-m-d',strtotime($data['tanggal_jemurgabah']));
-        $data['tanggal_selesai_jemurgabah'] = date('Y-m-d',strtotime($data['tanggal_selesai_jemurgabah']));
-        $jg = new Jemurgabah;
-        $jg->fill($data);
-        if ($jg->save()) {
-          Session::flash('alert','Berhasil menambah data penjemuran gabah '.$data['gabah_id']);
+        DB::transaction(function() use ($request){
+          foreach ($request->gabah as $index => $id) {
+            Jemurgabah::create([
+              'gabah_id' => $id,
+              'tanggal_jemurgabah' => date('Y-m-d',strtotime($request->tanggal_jemurgabah)),
+              'tanggal_selesai_jemurgabah' => date('Y-m-d',strtotime($request->tanggal_selesai_jemurgabah)),
+              'user_id' => Auth::id()
+            ]);
+          }
+          Session::flash('alert','Berhasil menambah data penjemuran gabah.');
           Session::flash('alert-class','alert-success');
-        }else {
-          Session::flash('alert','Gagal menambah data penjemuran gabah '.$data['gabah_id']);
-          Session::flash('alert-class','alert-danger');
-        }
+        });
         return redirect('gudang/gabah');
     }
 
