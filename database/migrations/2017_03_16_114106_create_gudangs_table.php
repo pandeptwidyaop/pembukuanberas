@@ -17,8 +17,8 @@ class CreateGudangsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('nama_barang_gudang');
-            $table->double('stok_barang_gudang',10,4);
-            $table->double('harga_barang_gudang',10,2);
+            $table->bigInteger('stok_barang_gudang');
+            $table->bigInteger('harga_barang_gudang');
             $table->enum('tipe_barang_gudang',['gabah_basah','gabah_kering','beras','sekam','dedak']);
             $table->timestamps();
         });
