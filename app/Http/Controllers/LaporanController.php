@@ -47,7 +47,11 @@ class LaporanController extends Controller
 
     public function getAllData($start,$end)
     {
-      $gabah = Gabah::whereBetween('tanggal_masuk_gabah',[$start,$end])->get()->groupBy('tanggal_masuk_gabah');
+      $gabah = Gabah::select('gabahs.*','penggilingans.tanggal_giling')
+        ->join('gilings','gilings.gabah_id','=','gabahs.id')
+        ->join('penggilingans','penggilingans.id','=','gilings.penggilingan_id')
+        ->whereBetween('penggilingans.tanggal_giling',[$start,$end])->get()->groupBy('tanggal_giling');
+
       $beras = Beras::whereBetween('tanggal_masuk_beras',[$start,$end])->get()->groupBy('tanggal_masuk_beras');
       $sekam = Sekam::whereBetween('tanggal_masuk_sekam',[$start,$end])->get()->groupBy('tanggal_masuk_sekam');
       $dedak = Dedak::whereBetween('tanggal_masuk_dedak',[$start,$end])->get()->groupBy('tanggal_masuk_dedak');
