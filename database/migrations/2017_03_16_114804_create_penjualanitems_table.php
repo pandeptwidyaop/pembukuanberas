@@ -17,7 +17,7 @@ class CreatePenjualanitemsTable extends Migration
             $table->increments('id');
             $table->integer('penjualan_id')->unsigned();
             $table->integer('gudang_id')->unsigned();
-            $table->double('jumlah',10,2);
+            $table->bigInteger('jumlah');
             $table->integer('harga');
             $table->timestamps();
         });

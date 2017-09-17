@@ -18,7 +18,7 @@ class CreateBerasTable extends Migration
             $table->integer('penggilingan_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_masuk_beras');
-            $table->double('jumlah_beras',10,2);
+            $table->bigInteger('jumlah_beras');
             $table->timestamps();
         });
         Schema::table('beras', function(Blueprint $table){

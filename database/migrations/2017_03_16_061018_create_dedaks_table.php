@@ -15,15 +15,15 @@ class CreateDedaksTable extends Migration
     {
         Schema::create('dedaks', function (Blueprint $table) {
             $table->increments('id');
-            $table->char('gabah_id',8);
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_masuk_dedak');
-            $table->double('jumlah_dedak',10,4);
+            $table->bigInteger('jumlah_dedak');
+            $table->integer('penggilingan_id')->unsigned();
             $table->timestamps();
         });
         Schema::table('dedaks', function(Blueprint $table){
-          $table->foreign('gabah_id')->references('id')->on('gabahs')->onUpdate('cascade')->onDelete('cascade');
           $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+          $table->foreign('penggilingan_id')->references('id')->on('penggilingans')->onDelete('cascade');
         });
     }
 

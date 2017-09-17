@@ -16,13 +16,12 @@ class CreateGilingsTable extends Migration
         Schema::create('gilings', function (Blueprint $table) {
             $table->increments('id');
             $table->char('gabah_id',8);
-            $table->integer('user_id')->unsigned();
-            $table->date('tanggal_giling');
+            $table->integer('penggilingan_id')->unsigned();
             $table->timestamps();
         });
         Schema::table('gilings', function(Blueprint $table){
+          $table->foreign('penggilingan_id')->references('id')->on('penggilingans')->onDelete('cascade')->onUpdate('cascade');
           $table->foreign('gabah_id')->references('id')->on('gabahs')->onDelete('cascade')->onUpdate('cascade');
-          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

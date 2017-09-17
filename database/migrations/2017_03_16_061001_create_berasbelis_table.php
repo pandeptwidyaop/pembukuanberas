@@ -17,8 +17,8 @@ class CreateBerasbelisTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_berasbeli');
-            $table->double('harga_berasbeli',10,2);
-            $table->double('jumlah_berasbeli',10,2);
+            $table->bigInteger('harga_berasbeli');
+            $table->bigInteger('jumlah_berasbeli');
             $table->string('penjual_berasbeli');
             $table->timestamps();
         });

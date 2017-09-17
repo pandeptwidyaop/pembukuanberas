@@ -17,7 +17,6 @@ class CreatePenggilingansTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->date('tanggal_giling');
-            $table->text('gabah_id');
             $table->timestamps();
         });
     }
