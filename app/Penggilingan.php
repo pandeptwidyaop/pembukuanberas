@@ -6,11 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Penggilingan extends Model
 {
-    protected $fillable = ['user_id','tanggal_giling','gabah_id'];
+    protected $fillable = ['user_id','tanggal_giling'];
 
-    public function Beras()
+    public function Giling()
     {
-      return $this->hasOne('App\Beras');
+      return $this->hasMany('App\Giling');
+    }
+
+    public function User()
+    {
+      return $this->belongsTo('App\User');
     }
 
 

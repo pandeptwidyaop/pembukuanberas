@@ -8,7 +8,6 @@ use App\Penggilingan;
 class Sekam extends Model
 {
     protected $fillable = [
-      'penggilingan_id',
       'user_id',
       'tanggal_masuk_sekam',
       'jumlah_sekam',
@@ -17,6 +16,11 @@ class Sekam extends Model
 
     public function User(){
       return $this->belongsTo('App\User');
+    }
+
+    public function Sekamitem()
+    {
+      return $this->hasMany('App\Sekamitemn');
     }
 
     public static function getGabah($penggilingan_id)
