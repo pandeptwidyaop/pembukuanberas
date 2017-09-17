@@ -67,8 +67,8 @@
                                   </div>
                                 </td>
                                 <td>
-                                  @foreach (json_decode($r->Penggilingan->gabah_id) as $key => $value)
-                                    <p><a href="{{url('gudang/gabah/'.$value)}}">{{$value}}</a></p>
+                                  @foreach ($r->Penggilingan->Giling as $key => $value)
+                                    <p><a href="{{url('gudang/gabah/'.$value->gabah_id)}}">{{$value->gabah_id}}</a></p>
                                   @endforeach
                                 </td>
                                 <td>{{date('d F Y',strtotime($r->tanggal_masuk_beras))}}</td>

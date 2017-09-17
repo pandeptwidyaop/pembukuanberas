@@ -59,8 +59,8 @@
                                         </td>
                                         <td>{{date('d F Y',strtotime($penggilingan->tanggal_giling))}}</td>
                                         <td>
-                                          @foreach (json_decode($penggilingan->gabah_id) as $gabah)
-                                            <a href="{{url('gudang/gabah/'.$gabah)}}">{{$gabah}}</a><br>
+                                          @foreach ($penggilingan->Giling as $giling)
+                                            <a href="{{url('gudang/gabah/'.$giling->gabah_id)}}">{{$giling->gabah_id}}</a><br>
                                           @endforeach
                                         </td>
                                       </tr>

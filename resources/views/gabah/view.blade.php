@@ -7,7 +7,7 @@
               <div class="card">
                   <div class="header">
                       <h2>
-                          DATA SPESIFIK GABAH KODE : {{$data_gabah[0]->id}}
+                          DATA SPESIFIK GABAH KODE : {{$data_gabah->id}}
 
                       </h2>
                       <ul class="header-dropdown m-r--5">
@@ -38,22 +38,20 @@
                           </thead>
                           <tbody>
                             <tr>
-                              @foreach ($data_gabah as $r)
-                                <td>{{$r->id}}</td>
-                                <td>{{date('d F Y', strtotime($r->tanggal_masuk_gabah))}}</td>
-                                <td>{{number_format($r->jumlah_gabah,2,',','.')}} - {{$r->jumlah_kampil}} kampil</td>
-                                <td>{{$r->nama_penjual_gabah}}</td>
-                                <td>{{$r->penimbang_gabah}}</td>
-                                <td>Rp. {{number_format($r->harga_kiloan_gabah,2,',','.')}}</td>
-                                <td>Rp .{{number_format(($r->jumlah_gabah * $r->harga_kiloan_gabah),2,',','.')}}</td>
-                                <td>{{($r->tipe_gabah == 'gabah_kering') ? 'KERING' : 'BASAH'}}</td>
-                                <td>{{$r->User->name}}</td>
-                              @endforeach
+                              <td>{{$data_gabah->id}}</td>
+                              <td>{{date('d F Y', strtotime($data_gabah->tanggal_masuk_gabah))}}</td>
+                              <td>{{number_format($data_gabah->jumlah_gabah,2,',','.')}} - {{$data_gabah->jumlah_kampil}} kampil</td>
+                              <td>{{$data_gabah->nama_penjual_gabah}}</td>
+                              <td>{{$data_gabah->penimbang_gabah}}</td>
+                              <td>Rp. {{number_format($data_gabah->harga_kiloan_gabah,2,',','.')}}</td>
+                              <td>Rp .{{number_format(($data_gabah->jumlah_gabah * $data_gabah->harga_kiloan_gabah),2,',','.')}}</td>
+                              <td>{{($data_gabah->tipe_gabah == 'gabah_kering') ? 'KERING' : 'BASAH'}}</td>
+                              <td>{{$data_gabah->User->name}}</td>
                             </tr>
                           </tbody>
                       </table>
 
-                      @if ($data_gabah[0]->tipe_gabah == 'gabah_basah')
+                      @if ($data_gabah->tipe_gabah == 'gabah_basah')
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -90,8 +88,8 @@
                             <tr>
                               @foreach ($data_giling as $r)
                                 <td>{{$r->gabah_id}}</td>
-                                <td>{{date('d F Y', strtotime($r->tanggal_giling))}}</td>
-                                <td>{{$r->User->name}}</td>
+                                <td>{{date('d F Y', strtotime($r->Penggilingan->tanggal_giling))}}</td>
+                                <td>{{$r->Penggilingan->User->name}}</td>
                               @endforeach
                             </tr>
                           </tbody>

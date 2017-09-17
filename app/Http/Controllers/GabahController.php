@@ -71,7 +71,7 @@ class GabahController extends Controller
      */
     public function show($id)
     {
-        $data_gabah = Gabah::where('id',$id)->get();
+        $data_gabah = Gabah::find($id);
         $data_jemur = Jemurgabah::where('gabah_id',$id)->get();
         $data_giling = Giling::where('gabah_id',$id)->get();
         return view('gabah.view',compact('data_gabah','data_jemur','data_giling'));

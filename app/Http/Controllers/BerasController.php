@@ -53,8 +53,8 @@ class BerasController extends Controller
           $stok_basah = $basah->stok_barang_gudang;
 
           $penggilingan = Penggilingan::findOrFail($request->penggilingan_id);
-          foreach (json_decode($penggilingan->gabah_id) as $key => $value) {
-            $gabah = Gabah::findOrFail($value);
+          foreach ($penggilingan->Giling as $key => $value) {
+            $gabah = Gabah::findOrFail($value->gabah_id);
             if ($gabah->tipe_gabah == 'gabah_kering') {
               $stok_kering -= $gabah->jumlah_gabah;
             }else {
@@ -70,9 +70,11 @@ class BerasController extends Controller
             'jumlah_kampil' => $request->jumlah_kampil
           ]);
 
+
+
           $kering->update(['stok_barang_gudang' => $stok_kering]);
           $basah->update(['stok_barang_gudang' => $stok_basah]);
-          $gudang->update(['stok_barang_gudang' => $request->jumlah_beras]);
+          $gudang->update(['stok_barang_gudang' => $request->jumlah_beras + $gudang->stok_barang_gudang]);
 
           Session::flash('alert','Berhasil mendambah data beras dari penggilingan gabah');
           Session::flash('alert-class','alert-success');
@@ -155,8 +157,8 @@ class BerasController extends Controller
           $stokGabahKering = $gabahKering->stok_barang_gudang;
           $stokGabahBasah = $gabahBasah->stok_barang_gudang;
 
-          foreach (json_decode($penggilingan->gabah_id) as $key => $value) {
-            $gabah = Gabah::findOrFail($value);
+          foreach ($penggilingan->Giling as $key => $value) {
+            $gabah = Gabah::findOrFail($value->gabah_id);
             if ($gabah->tipe_gabah == 'gabah_kering') {
               $stokGabahKering += $gabah->jumlah_gabah;
             }else {

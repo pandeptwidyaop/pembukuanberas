@@ -43,7 +43,13 @@
                               <div class="form-group">
                                   <div class="form-line">
                                     <select class="form-control show-tick" data-live-search="true" name="penggilingan_id" required="">
-                                      <option value="{{$r->Penggilingan->id}}" selected="">{{$r->Penggilingan->id.' - '.date(' d F Y',strtotime($r->Penggilingan->tanggal_giling)).' - '}} Gabah ID : {{$r->Penggilingan->gabah_id}} </option>
+                                      @php
+                                        $gabah = "";
+                                        foreach ($r->Penggilingan->Giling as $key => $value) {
+                                          $gabah .= $value->gabah_id." ";
+                                        }
+                                      @endphp
+                                      <option value="{{$r->Penggilingan->id}}" selected="">{{$r->Penggilingan->id.' - '.date(' d F Y',strtotime($r->Penggilingan->tanggal_giling)).' - '}} Gabah ID : {{$gabah}} </option>
                                     </select>
                                   </div>
                               </div>

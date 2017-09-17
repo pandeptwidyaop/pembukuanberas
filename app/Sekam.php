@@ -20,7 +20,7 @@ class Sekam extends Model
 
     public function Sekamitem()
     {
-      return $this->hasMany('App\Sekamitemn');
+      return $this->hasMany('App\Sekamitem');
     }
 
     public static function getGabah($penggilingan_id)

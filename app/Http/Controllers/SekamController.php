@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sekam;
+use App\Sekamitem;
 use App\Gudang;
 use App\Gabah;
 use App\Beras;
@@ -51,23 +52,25 @@ class SekamController extends Controller
           'jumlah_kampil' => 'required'
         ]);
 
-        DB::transaction(function() use ($request) {
-          $data = $request->except('_token');
-          $data['user_id'] = Auth::user()->id;
-          $data['tanggal_masuk_sekam'] = date('Y-m-d',strtotime($data['tanggal_masuk_sekam']));
-          $data['penggilingan_id'] = json_encode($request->penggilingan_id);
-          $stok = Gudang::where('tipe_barang_gudang','sekam')->first()->stok_barang_gudang;
-          $stok += $data['jumlah_sekam'];
-          $sekam = new Sekam;
-          $sekam->fill($data);
-          if ($sekam->save()) {
-            Gudang::where('tipe_barang_gudang','sekam')->update(['stok_barang_gudang' => $stok]);
-            Session::flash('alert','Berhasil menambah sekam dari hasil giling gabah.');
-            Session::flash('alert-class','alert-success');
-          }else {
-            Session::flash('alert','Gagal menambah sekam dari hasil giling gabah.');
-            Session::flash('alert-class','alert-danger');
+        DB::transaction(function() use ($request){
+          $sekam = Sekam::create([
+            'user_id' => Auth::id(),
+            'tanggal_masuk_sekam' => date('Y-m-d',strtotime($request->tanggal_masuk_sekam)),
+            'jumlah_sekam' => $request->jumlah_sekam,
+            'jumlah_kampil' => $request->jumlah_kampil
+          ]);
+
+          foreach ($request->penggilingan_id as $index => $id) {
+            Sekamitem::create([
+              'sekam_id' => $sekam->id,
+              'penggilingan_id' => $id
+            ]);
           }
+          $stok = Gudang::where('tipe_barang_gudang','sekam')->first()->stok_barang_gudang;
+          $stok += $request->jumlah_sekam;
+          Gudang::where('tipe_barang_gudang','sekam')->update(['stok_barang_gudang'=> $stok]);
+          Session::flash('alert','Berhasil menambah sekam dari hasil giling gabah.');
+          Session::flash('alert-class','alert-success');
         });
         return redirect('gudang/sekam');
     }
@@ -162,12 +165,12 @@ class SekamController extends Controller
     public function selectPenggilinganNotUse()
     {
       $sekams = Sekam::all();
-      $penggilingan_id = [];
+      $penggilingans = [];
       foreach ($sekams as $sekam) {
-        foreach (json_decode($sekam->penggilingan_id) as $id) {
-          array_push($penggilingan_id,$id);
+        foreach ($sekam->Sekamitem as $item) {
+          $penggilingans[] = $item->penggilingan_id;
         }
       }
-      return Penggilingan::whereNotIn('id',$penggilingan_id)->get();
+      return Penggilingan::whereNotIn('id',$penggilingans)->get();
     }
 }

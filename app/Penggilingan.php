@@ -18,5 +18,10 @@ class Penggilingan extends Model
       return $this->belongsTo('App\User');
     }
 
+    public function Beras()
+    {
+      return $this->hasOne('App\Beras');
+    }
+
 
 }

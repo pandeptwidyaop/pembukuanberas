@@ -42,8 +42,14 @@
                                   <div class="form-line">
                                     <select class="form-control show-tick" data-live-search="true" name="penggilingan_id" required="">
                                         <option value="">Pilih Gabah Yang Digiling</option>
-                                        @foreach ($penggilingans as $r)
-                                          <option value="{{$r->id}}">{{date('d F Y',strtotime($r->tanggal_giling)).' - '.$r->gabah_id}}</option>
+                                        @foreach ($penggilingans as $penggilingan)
+                                          @php
+                                            $gabah = '';
+                                            foreach ($penggilingan->Giling as $giling) {
+                                              $gabah .= $giling->gabah_id." ";
+                                            }
+                                          @endphp
+                                          <option value="{{$penggilingan->id}}">{{date('d F Y',strtotime($penggilingan->tanggal_giling)).' - '.$gabah}}</option>
                                         @endforeach
                                     </select>
                                   </div>

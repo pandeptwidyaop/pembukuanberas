@@ -42,11 +42,16 @@ class GilingController extends Controller
     public function store(Request $request)
     {
         DB::transaction(function() use ($request) {
-          $gabah_id = json_encode($request->gabah);
-          foreach ($request->gabah as $gabah) {
-            $giling = Giling::create(['tanggal_giling' => date('Y-m-d',strtotime($request->tanggal_giling)),'user_id' => Auth::id(),'gabah_id' => $gabah]);
+          $penggilingan = Penggilingan::create([
+            'user_id' => Auth::id(),
+            'tanggal_giling' => date('Y-m-d',strtotime($request->tanggal_giling))
+          ]);
+          foreach ($request->gabah as $index => $id) {
+            Giling::create([
+              'gabah_id' => $id,
+              'penggilingan_id' => $penggilingan->id
+            ]);
           }
-          $penggilingan = Penggilingan::create(['user_id' => Auth::id(),'tanggal_giling' => date('Y-m-d',strtotime($request->tanggal_giling)),'gabah_id' => $gabah_id]);
         });
         Session::flash('alert','Berhasil menambah data penggilingan gabah.');
         Session::flash('alert-class','alert-success');

@@ -54,7 +54,7 @@
                               <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                          <input type="text"  class="form-control" placeholder="Jumlah dedak" name="jumlah_dedak" required="" value="{{number_format($r->jumlah_dedak,2,'.','.')}}">
+                                          <input type="text"  class="form-control" placeholder="Jumlah dedak" name="jumlah_dedak" required="" value="{{$r->jumlah_dedak}}">
                                       </div>
 
                                   </div>

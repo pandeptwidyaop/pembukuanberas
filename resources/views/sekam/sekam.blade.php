@@ -68,9 +68,9 @@
                                 </td>
                                 <td>{{date('d F Y',strtotime($r->tanggal_masuk_sekam))}}</td>
                                 <td>
-                                  @foreach (json_decode($r->penggilingan_id) as $penggilingan)
-                                    @foreach (\App\Sekam::getGabah($penggilingan) as $gabah)
-                                      <a href="{{url('gudang/gabah/'.$gabah)}}">{{$gabah}}</a><br>
+                                  @foreach ($r->Sekamitem as $item)
+                                    @foreach ($item->Penggilingan->Giling as $giling)
+                                      <a href="{{url('gudang/gabah/'.$giling->gabah_id)}}">{{$giling->gabah_id}}</a><br>
                                     @endforeach
                                   @endforeach
                                 </td>
